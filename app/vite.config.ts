@@ -11,4 +11,5 @@ export default defineConfig({
     alias: [{ find: "@", replacement: "/src" }],
   },
   plugins: [react()],
+  base: "./",
 });
