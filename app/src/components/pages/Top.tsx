@@ -1,5 +1,5 @@
-import { BoardContainer } from "@/components/features/board/BoardContainer";
+import { GameContainer } from "@/components/features/game/GameContainer";
 
 export const Top = () => {
-  return <BoardContainer />;
+  return <GameContainer />;
 };
