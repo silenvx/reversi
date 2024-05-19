@@ -1,24 +1,30 @@
 import { BoardContainer } from "@/components/features/board/BoardContainer";
-import { DiscKind } from "@/hooks/reversiGame";
+import { DiscKind, ReversiGameType } from "@/hooks/reversiGame";
 
 type GamePresenterProps = {
-  board: DiscKind[][];
-  currentPlayer: DiscKind;
-  winner: DiscKind;
-  makeMove: (row: number, col: number) => void;
+  reversiGame: ReversiGameType;
 };
 
-export const GamePresenter = ({
-  board,
-  currentPlayer,
-  winner,
-  makeMove,
-}: GamePresenterProps) => {
+export const GamePresenter = ({ reversiGame }: GamePresenterProps) => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col items-center">
-        <h1 className="text-4xl font-bold">Reversi</h1>
-        <BoardContainer board={board} makeMove={makeMove} />
+      <div className="flex flex-col items-center gap-4">
+        <p className="text-4xl font-bold">
+          Player: {reversiGame.currentPlayer}
+          <br />
+          black:{" "}
+          {reversiGame.board.flat().filter((disc) => disc === "black").length}
+          <br />
+          white:{" "}
+          {reversiGame.board.flat().filter((disc) => disc === "white").length}
+        </p>
+        <BoardContainer reversiGame={reversiGame} />
+        <button
+          className="border border-black rounded p-2"
+          onClick={reversiGame.reset}
+        >
+          Reset
+        </button>
       </div>
     </div>
   );
