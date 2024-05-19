@@ -1,12 +1,19 @@
-import { DiscKind } from "@/hooks/reversiGame";
+import { DiscKind, ReversiGameType } from "@/hooks/reversiGame";
 
 type CellPresenterProps = {
-  onClick: () => void;
+  reversiGame: ReversiGameType;
   disc: DiscKind;
+  isMakeable: boolean;
+  onClick: () => void;
 };
 
-export const CellPresenter = ({ onClick, disc }: CellPresenterProps) => {
-  const viewDisc = (disc: DiscKind) => {
+export const CellPresenter = ({
+  reversiGame,
+  disc,
+  isMakeable,
+  onClick,
+}: CellPresenterProps) => {
+  const viewDisc = (disc: DiscKind, i: number) => {
     switch (disc) {
       case "black":
         return "bg-black";
@@ -17,12 +24,19 @@ export const CellPresenter = ({ onClick, disc }: CellPresenterProps) => {
     }
   };
 
+  const discClass = viewDisc(disc, 1);
+  const hoverClass = isMakeable
+    ? `hover:bg-gray-500 hover:opacity-50 cursor-pointer`
+    : "";
+
   return (
     <div
       className="border border-black w-20 h-20 bg-green-800 flex items-center justify-center"
       onClick={onClick}
     >
-      <div className={`rounded-full w-16 h-16 ${viewDisc(disc)}`}></div>
+      <div
+        className={`rounded-full w-16 h-16 ${discClass} ${hoverClass}`}
+      ></div>
     </div>
   );
 };

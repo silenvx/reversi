@@ -1,15 +1,14 @@
 import { BoardPresenter } from "@/components/features/board/BoardPresenter";
-import { DiscKind } from "@/hooks/reversiGame";
+import { DiscKind, ReversiGameType } from "@/hooks/reversiGame";
 
 type BoardContainerProps = {
-  board: DiscKind[][];
-  makeMove: (row: number, col: number) => void;
+  reversiGame: ReversiGameType;
 };
 
-export const BoardContainer = ({ board, makeMove }: BoardContainerProps) => {
+export const BoardContainer = ({ reversiGame }: BoardContainerProps) => {
   const handleClick = (row: number, col: number) => {
-    makeMove(row, col);
+    reversiGame.makeMove(row, col);
   };
 
-  return <BoardPresenter board={board} handleClick={handleClick} />;
+  return <BoardPresenter reversiGame={reversiGame} handleClick={handleClick} />;
 };
