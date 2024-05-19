@@ -1,7 +1,16 @@
 # オセロ
 https://silenvx.github.io/reversi/
 
-# デプロイ
+# 動作確認
+## ローカルで実行する
+```
+$ git clone git@github.com:silenvx/reversi.git
+$ cd reversi/app
+$ npm ci
+$ npm run dev
+```
+
+## デプロイ
 ```
 $ cd app
 $ npm run deploy
