@@ -8,6 +8,7 @@ $ git clone git@github.com:silenvx/reversi.git
 $ cd reversi/app
 $ npm ci
 $ npm run dev
+$ open http://localhost:3000/reversi
 ```
 
 ## デプロイ
