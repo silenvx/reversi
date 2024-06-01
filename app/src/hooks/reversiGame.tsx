@@ -12,7 +12,7 @@ export type ReversiGameType = {
 };
 
 export const useReversiGame = (): ReversiGameType => {
-  const initialBoard = [...Array(8)].map(() =>
+  const initialBoard: DiscKind[][] = [...Array(8)].map(() =>
     Array(8).fill(undefined as DiscKind),
   );
 
@@ -167,7 +167,7 @@ export const useReversiGame = (): ReversiGameType => {
 
   // パスの動作を確認するためのboardを生成
   const setPassBoard = () => {
-    const initialBoard = [...Array(8)].map(() =>
+    const initialBoard: DiscKind[][] = [...Array(8)].map(() =>
       Array(8).fill(undefined as DiscKind),
     );
     initialBoard[3][3] = "black";
