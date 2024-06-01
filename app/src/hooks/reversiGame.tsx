@@ -56,7 +56,7 @@ export const useReversiGame = (): ReversiGameType => {
 
   // 石を置けるかどうかの判定
   const checkMakeable = (row: number, col: number): boolean => {
-    if (board[row][col] != undefined) {
+    if (board[row][col] !== undefined) {
       return false;
     }
     // 8方向に対して石をひっくり返せるかどうかを判定
@@ -145,7 +145,7 @@ export const useReversiGame = (): ReversiGameType => {
   };
 
   const makeMove = (row: number, col: number): boolean => {
-    if (board[row][col] != undefined) {
+    if (board[row][col] !== undefined) {
       return false;
     }
     if (!checkMakeable(row, col)) {
