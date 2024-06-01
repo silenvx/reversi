@@ -24,6 +24,18 @@ export type ReversiGameType = {
 };
 
 export const useReversiGame = (): ReversiGameType => {
+  // 調べるマスの方向
+  const directions = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ];
+
   const initialBoard: Disc[][] = [...Array(8)].map(() =>
     Array(8).fill(Disc.empty as Disc),
   );
@@ -72,16 +84,6 @@ export const useReversiGame = (): ReversiGameType => {
       return false;
     }
     // 8方向に対して石をひっくり返せるかどうかを判定
-    const directions = [
-      [-1, -1],
-      [-1, 0],
-      [-1, 1],
-      [0, -1],
-      [0, 1],
-      [1, -1],
-      [1, 0],
-      [1, 1],
-    ];
     let makeable = false;
     directions.forEach(([dx, dy]) => {
       let x = row + dx;
@@ -118,16 +120,6 @@ export const useReversiGame = (): ReversiGameType => {
 
   // 石をひっくり返す処理
   const reverse = (row: number, col: number) => {
-    const directions = [
-      [-1, -1],
-      [-1, 0],
-      [-1, 1],
-      [0, -1],
-      [0, 1],
-      [1, -1],
-      [1, 0],
-      [1, 1],
-    ];
     directions.forEach(([dx, dy]) => {
       let x = row + dx;
       let y = col + dy;
