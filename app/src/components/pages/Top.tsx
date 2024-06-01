@@ -1,5 +1,5 @@
 import { GameContainer } from "@/components/features/game/GameContainer";
 
-export const Top = () => {
+export function Top() {
   return <GameContainer />;
-};
+}

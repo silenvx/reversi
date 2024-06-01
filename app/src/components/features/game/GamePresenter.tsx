@@ -5,7 +5,7 @@ type GamePresenterProps = {
   reversiGame: ReversiGameType;
 };
 
-export const GamePresenter = ({ reversiGame }: GamePresenterProps) => {
+export function GamePresenter({ reversiGame }: GamePresenterProps) {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col items-center gap-4">
@@ -27,6 +27,7 @@ export const GamePresenter = ({ reversiGame }: GamePresenterProps) => {
         <BoardContainer reversiGame={reversiGame} />
         <button
           className="border border-black rounded p-2"
+          type="button"
           onClick={reversiGame.reset}
         >
           Reset
@@ -34,4 +35,4 @@ export const GamePresenter = ({ reversiGame }: GamePresenterProps) => {
       </div>
     </div>
   );
-};
+}
