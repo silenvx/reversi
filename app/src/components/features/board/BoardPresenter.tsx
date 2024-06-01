@@ -1,5 +1,5 @@
 import { CellPresenter } from "@/components/features/board/ui/CellPresenter";
-import { DiscKind, ReversiGameType } from "@/hooks/reversiGame";
+import { Disc, ReversiGameType } from "@/hooks/reversiGame";
 
 type BoardPresenterProps = {
   reversiGame: ReversiGameType;

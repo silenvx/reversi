@@ -1,5 +1,5 @@
 import { BoardContainer } from "@/components/features/board/BoardContainer";
-import { DiscKind, ReversiGameType } from "@/hooks/reversiGame";
+import { Disc, ReversiGameType } from "@/hooks/reversiGame";
 
 type GamePresenterProps = {
   reversiGame: ReversiGameType;
@@ -13,10 +13,16 @@ export const GamePresenter = ({ reversiGame }: GamePresenterProps) => {
           Player: {reversiGame.currentPlayer}
           <br />
           black:{" "}
-          {reversiGame.board.flat().filter((disc) => disc === "black").length}
+          {
+            reversiGame.board.flat().filter((disc) => disc === Disc.black)
+              .length
+          }
           <br />
           white:{" "}
-          {reversiGame.board.flat().filter((disc) => disc === "white").length}
+          {
+            reversiGame.board.flat().filter((disc) => disc === Disc.white)
+              .length
+          }
         </p>
         <BoardContainer reversiGame={reversiGame} />
         <button

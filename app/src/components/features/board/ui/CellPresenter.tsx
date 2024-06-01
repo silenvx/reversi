@@ -1,8 +1,8 @@
-import { DiscKind, ReversiGameType } from "@/hooks/reversiGame";
+import { Disc, ReversiGameType } from "@/hooks/reversiGame";
 
 type CellPresenterProps = {
   reversiGame: ReversiGameType;
-  disc: DiscKind;
+  disc: Disc;
   isMakeable: boolean;
   onClick: () => void;
 };
@@ -13,11 +13,11 @@ export const CellPresenter = ({
   isMakeable,
   onClick,
 }: CellPresenterProps) => {
-  const viewDisc = (disc: DiscKind, i: number) => {
+  const viewDisc = (disc: Disc, i: number) => {
     switch (disc) {
-      case "black":
+      case Disc.black:
         return "bg-black";
-      case "white":
+      case Disc.white:
         return "bg-white";
       default:
         return "";

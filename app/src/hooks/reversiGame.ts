@@ -1,29 +1,56 @@
 import { useState, useEffect } from "react";
 
-export type DiscKind = "black" | "white" | undefined;
+export const Disc = {
+  black: "black",
+  white: "white",
+  empty: undefined,
+};
+export type Disc = (typeof Disc)[keyof typeof Disc];
+
+export const Winner = {
+  black: "black",
+  white: "white",
+  draw: "draw",
+};
+export type Winner = (typeof Winner)[keyof typeof Winner];
 
 export type ReversiGameType = {
-  board: DiscKind[][];
-  currentPlayer: DiscKind;
+  board: Disc[][];
+  currentPlayer: Disc;
   makeMove: (row: number, col: number) => boolean;
   checkMakeable: (row: number, col: number) => boolean;
   reset: () => void;
-  debug: () => void;
 };
 
 export const useReversiGame = (): ReversiGameType => {
-  const initialBoard = [...Array(8)].map(() =>
-    Array(8).fill(undefined as DiscKind),
+  // 盤面の大きさ
+  const boardX = 8;
+  const boardY = 8;
+
+  // 調べるマスの方向
+  const directions = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ];
+
+  const initialBoard: Disc[][] = [...Array(boardX)].map(() =>
+    Array(boardY).fill(Disc.empty as Disc),
   );
 
-  initialBoard[3][3] = "white";
-  initialBoard[4][4] = "white";
-  initialBoard[3][4] = "black";
-  initialBoard[4][3] = "black";
+  initialBoard[3][3] = Disc.white;
+  initialBoard[4][4] = Disc.white;
+  initialBoard[3][4] = Disc.black;
+  initialBoard[4][3] = Disc.black;
 
   const [board, setBoard] = useState(initialBoard);
-  const [currentPlayer, setCurrentPlayer] = useState<DiscKind>("black");
-  const [winner, setWinner] = useState<DiscKind | "draw">(undefined);
+  const [currentPlayer, setCurrentPlayer] = useState<Disc>(Disc.black);
+  const [winner, setWinner] = useState<Winner | undefined>(undefined);
   const [passCount, setPassCount] = useState(0);
 
   const discCount = (): [number, number] => {
@@ -31,9 +58,9 @@ export const useReversiGame = (): ReversiGameType => {
     let whiteCount = 0;
     board.forEach((row) => {
       row.forEach((cell) => {
-        if (cell === "black") {
+        if (cell === Disc.black) {
           blackCount++;
-        } else if (cell === "white") {
+        } else if (cell === Disc.white) {
           whiteCount++;
         }
       });
@@ -43,11 +70,11 @@ export const useReversiGame = (): ReversiGameType => {
 
   const checkWinner = () => {
     const [blackCount, whiteCount] = discCount();
-    if (blackCount + whiteCount === 64) {
+    if (blackCount + whiteCount === boardX * boardY) {
       if (blackCount > whiteCount) {
-        setWinner("black");
+        setWinner(Winner.black);
       } else if (blackCount < whiteCount) {
-        setWinner("white");
+        setWinner(Winner.white);
       } else {
         setWinner(undefined);
       }
@@ -56,27 +83,17 @@ export const useReversiGame = (): ReversiGameType => {
 
   // 石を置けるかどうかの判定
   const checkMakeable = (row: number, col: number): boolean => {
-    if (board[row][col] != undefined) {
+    if (board[row][col] !== Disc.empty) {
       return false;
     }
     // 8方向に対して石をひっくり返せるかどうかを判定
-    const directions = [
-      [-1, -1],
-      [-1, 0],
-      [-1, 1],
-      [0, -1],
-      [0, 1],
-      [1, -1],
-      [1, 0],
-      [1, 1],
-    ];
     let makeable = false;
     directions.forEach(([dx, dy]) => {
       let x = row + dx;
       let y = col + dy;
       let canReverse = false;
-      while (0 <= x && x < 8 && 0 <= y && y < 8) {
-        if (board[x][y] === undefined) {
+      while (0 <= x && x < boardX && 0 <= y && y < boardY) {
+        if (board[x][y] === Disc.empty) {
           break;
         }
         if (board[x][y] === currentPlayer) {
@@ -94,8 +111,8 @@ export const useReversiGame = (): ReversiGameType => {
   };
 
   const checkMakeableAll = (): boolean => {
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
+    for (let i = 0; i < boardX; i++) {
+      for (let j = 0; j < boardY; j++) {
         if (checkMakeable(i, j)) {
           return true;
         }
@@ -106,22 +123,12 @@ export const useReversiGame = (): ReversiGameType => {
 
   // 石をひっくり返す処理
   const reverse = (row: number, col: number) => {
-    const directions = [
-      [-1, -1],
-      [-1, 0],
-      [-1, 1],
-      [0, -1],
-      [0, 1],
-      [1, -1],
-      [1, 0],
-      [1, 1],
-    ];
     directions.forEach(([dx, dy]) => {
       let x = row + dx;
       let y = col + dy;
       let canReverse = false;
-      while (0 <= x && x < 8 && 0 <= y && y < 8) {
-        if (board[x][y] === undefined) {
+      while (0 <= x && x < boardX && 0 <= y && y < boardY) {
+        if (board[x][y] === Disc.empty) {
           break;
         }
         if (board[x][y] === currentPlayer) {
@@ -145,7 +152,7 @@ export const useReversiGame = (): ReversiGameType => {
   };
 
   const makeMove = (row: number, col: number): boolean => {
-    if (board[row][col] != undefined) {
+    if (board[row][col] !== undefined) {
       return false;
     }
     if (!checkMakeable(row, col)) {
@@ -154,52 +161,24 @@ export const useReversiGame = (): ReversiGameType => {
     board[row][col] = currentPlayer;
     reverse(row, col);
     setBoard(board);
-    setCurrentPlayer(currentPlayer === "black" ? "white" : "black");
+    setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
     return true;
   };
 
   const reset = () => {
     setBoard(initialBoard);
-    setCurrentPlayer("black");
+    setCurrentPlayer(Disc.black);
     setWinner(undefined);
     setPassCount(0);
-  };
-
-  // パスの動作を確認するためのboardを生成
-  const setPassBoard = () => {
-    const initialBoard = [...Array(8)].map(() =>
-      Array(8).fill(undefined as DiscKind),
-    );
-    initialBoard[3][3] = "black";
-    initialBoard[4][4] = "white";
-    initialBoard[3][4] = "black";
-    initialBoard[4][3] = "black";
-
-    initialBoard[3][2] = "black";
-    initialBoard[4][5] = "white";
-    initialBoard[4][6] = "white";
-
-    initialBoard[5][5] = "white";
-
-    initialBoard[6][3] = "black";
-
-    initialBoard[6][4] = "black";
-    initialBoard[6][5] = "black";
-    initialBoard[6][6] = "black";
-    initialBoard[6][6] = "black";
-    initialBoard[6][7] = "black";
-
-    initialBoard[7][7] = "white";
-    setBoard(initialBoard);
   };
 
   // boardが変化したときの処理
   useEffect(() => {
     if (!checkMakeableAll()) {
       if (passCount === 1) {
-        setWinner("draw");
+        setWinner(Winner.draw);
       }
-      setCurrentPlayer(currentPlayer === "black" ? "white" : "black");
+      setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
       setPassCount(passCount + 1);
     } else {
       setPassCount(0);
@@ -209,13 +188,13 @@ export const useReversiGame = (): ReversiGameType => {
 
   useEffect(() => {
     switch (winner) {
-      case "black":
+      case Winner.black:
         alert("黒の勝ちです");
         break;
-      case "white":
+      case Winner.white:
         alert("白の勝ちです");
         break;
-      case "draw":
+      case Winner.draw:
         alert("引き分けです");
         break;
     }
@@ -228,8 +207,5 @@ export const useReversiGame = (): ReversiGameType => {
     makeMove,
     checkMakeable,
     reset,
-    debug: () => {
-      setPassBoard();
-    },
   };
 };
