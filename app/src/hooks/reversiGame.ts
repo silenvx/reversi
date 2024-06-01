@@ -23,6 +23,10 @@ export type ReversiGameType = {
 };
 
 export const useReversiGame = (): ReversiGameType => {
+  // 盤面の大きさ
+  const boardX = 8;
+  const boardY = 8;
+
   // 調べるマスの方向
   const directions = [
     [-1, -1],
@@ -35,8 +39,8 @@ export const useReversiGame = (): ReversiGameType => {
     [1, 1],
   ];
 
-  const initialBoard: Disc[][] = [...Array(8)].map(() =>
-    Array(8).fill(Disc.empty as Disc),
+  const initialBoard: Disc[][] = [...Array(boardX)].map(() =>
+    Array(boardY).fill(Disc.empty as Disc),
   );
 
   initialBoard[3][3] = Disc.white;
@@ -66,7 +70,7 @@ export const useReversiGame = (): ReversiGameType => {
 
   const checkWinner = () => {
     const [blackCount, whiteCount] = discCount();
-    if (blackCount + whiteCount === 64) {
+    if (blackCount + whiteCount === boardX * boardY) {
       if (blackCount > whiteCount) {
         setWinner(Winner.black);
       } else if (blackCount < whiteCount) {
@@ -88,7 +92,7 @@ export const useReversiGame = (): ReversiGameType => {
       let x = row + dx;
       let y = col + dy;
       let canReverse = false;
-      while (0 <= x && x < 8 && 0 <= y && y < 8) {
+      while (0 <= x && x < boardX && 0 <= y && y < boardY) {
         if (board[x][y] === Disc.empty) {
           break;
         }
@@ -107,8 +111,8 @@ export const useReversiGame = (): ReversiGameType => {
   };
 
   const checkMakeableAll = (): boolean => {
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
+    for (let i = 0; i < boardX; i++) {
+      for (let j = 0; j < boardY; j++) {
         if (checkMakeable(i, j)) {
           return true;
         }
@@ -123,7 +127,7 @@ export const useReversiGame = (): ReversiGameType => {
       let x = row + dx;
       let y = col + dy;
       let canReverse = false;
-      while (0 <= x && x < 8 && 0 <= y && y < 8) {
+      while (0 <= x && x < boardX && 0 <= y && y < boardY) {
         if (board[x][y] === Disc.empty) {
           break;
         }
