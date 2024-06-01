@@ -1,6 +1,7 @@
-import { appURL } from "@/config/url";
-import { Top } from "@/components/pages/Top";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { Top } from "@/components/pages/Top";
+import { appURL } from "@/config/url";
 
 function App() {
   return (
