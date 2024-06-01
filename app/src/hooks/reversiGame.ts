@@ -20,7 +20,6 @@ export type ReversiGameType = {
   makeMove: (row: number, col: number) => boolean;
   checkMakeable: (row: number, col: number) => boolean;
   reset: () => void;
-  debug: () => void;
 };
 
 export const useReversiGame = (): ReversiGameType => {
@@ -169,34 +168,6 @@ export const useReversiGame = (): ReversiGameType => {
     setPassCount(0);
   };
 
-  // パスの動作を確認するためのboardを生成
-  const setPassBoard = () => {
-    const initialBoard: Disc[][] = [...Array(8)].map(() =>
-      Array(8).fill(Disc.empty as Disc),
-    );
-    initialBoard[3][3] = Disc.black;
-    initialBoard[4][4] = Disc.white;
-    initialBoard[3][4] = Disc.black;
-    initialBoard[4][3] = Disc.black;
-
-    initialBoard[3][2] = Disc.black;
-    initialBoard[4][5] = Disc.white;
-    initialBoard[4][6] = Disc.white;
-
-    initialBoard[5][5] = Disc.white;
-
-    initialBoard[6][3] = Disc.black;
-
-    initialBoard[6][4] = Disc.black;
-    initialBoard[6][5] = Disc.black;
-    initialBoard[6][6] = Disc.black;
-    initialBoard[6][6] = Disc.black;
-    initialBoard[6][7] = Disc.black;
-
-    initialBoard[7][7] = Disc.white;
-    setBoard(initialBoard);
-  };
-
   // boardが変化したときの処理
   useEffect(() => {
     if (!checkMakeableAll()) {
@@ -232,8 +203,5 @@ export const useReversiGame = (): ReversiGameType => {
     makeMove,
     checkMakeable,
     reset,
-    debug: () => {
-      setPassBoard();
-    },
   };
 };
