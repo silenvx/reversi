@@ -1,4 +1,4 @@
-import { Disc, DiscType } from "@/hooks/reversiGame";
+import { DiscType, Disc } from "@/domains/reversi/const";
 
 const viewDisc = (disc: DiscType) => {
   switch (disc) {
