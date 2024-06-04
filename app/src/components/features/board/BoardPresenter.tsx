@@ -13,6 +13,8 @@ export function BoardPresenter({
   return (
     <div>
       <div className="flex">
+        {/* 左上の隙間 */}
+        <div className="w-20 h-20 flex items-center justify-center" />
         {[...Array(reversiGame.board[0].length).keys()].map((i) => (
           <div key={i} className="w-20 h-20 flex items-center justify-center">
             <div>{String.fromCharCode("A".charCodeAt(0) + i)}</div>
