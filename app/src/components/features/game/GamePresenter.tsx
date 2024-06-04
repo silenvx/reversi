@@ -1,5 +1,6 @@
 import { BoardContainer } from "@/components/features/board/BoardContainer";
-import { Disc, ReversiGameType } from "@/hooks/reversiGame";
+import { Disc } from "@/domains/reversi/const";
+import { ReversiGameType } from "@/hooks/reversiGame";
 
 type GamePresenterProps = {
   reversiGame: ReversiGameType;
