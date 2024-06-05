@@ -41,17 +41,6 @@ export const useReversiGame = (): ReversiGameType => {
   const [passCount, setPassCount] = useState(0);
 
   /**
-   * boardに石を置く
-   * @param row 置く行
-   * @param col 置く列
-   * @param disc 置く石
-   */
-  const setDisc = (row: number, col: number, disc: DiscType) => {
-    board[row][col] = disc;
-    setBoard(board);
-  };
-
-  /**
    * 石を置く
    * @param row 置く行
    * @param col 置く列
@@ -71,7 +60,8 @@ export const useReversiGame = (): ReversiGameType => {
     ) {
       return false;
     }
-    reverse({ board, row, col, currentPlayer, setDisc });
+    const newBoard = reverse({ board, row, col, currentPlayer });
+    setBoard(newBoard);
     setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
     return true;
   };
