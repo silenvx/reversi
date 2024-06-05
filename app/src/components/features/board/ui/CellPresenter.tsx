@@ -26,10 +26,11 @@ export function CellPresenter({
   const hoverClass = isMakeable
     ? `hover:bg-gray-500 hover:opacity-50 cursor-pointer`
     : "";
+  const highlightClass = isMakeable ? "cellhighlight" : "";
 
   return (
     <div
-      className="border border-black w-20 h-20 bg-green-800 flex items-center justify-center"
+      className={`border border-black w-20 h-20 bg-green-800 flex items-center justify-center ${highlightClass}`}
       onClick={onClick}
       onKeyPress={onClick}
       tabIndex={0}
