@@ -14,6 +14,7 @@ import { DiscType, Disc, Winner, WinnerType } from "@/domains/reversi/const";
 export type ReversiGameType = {
   board: DiscType[][];
   currentPlayer: DiscType;
+  winner: WinnerType;
   makeMove: (row: number, col: number) => boolean;
   checkMakeable: (row: number, col: number) => boolean;
   reset: () => void;
@@ -96,27 +97,6 @@ export const useReversiGame = (): ReversiGameType => {
     setWinner(newWinner);
   }, [discCount(board), passCount]);
 
-  // 勝者が変化したときの処理
-  useEffect(() => {
-    switch (winner) {
-      case Winner.black:
-        // eslint-disable-next-line no-alert
-        alert("黒の勝ちです");
-        break;
-      case Winner.white:
-        // eslint-disable-next-line no-alert
-        alert("白の勝ちです");
-        break;
-      case Winner.draw:
-        // eslint-disable-next-line no-alert
-        alert("引き分けです");
-        break;
-      default:
-        break;
-    }
-    reset();
-  }, [winner]);
-
   const checkMakeableWrapper = (row: number, col: number) =>
     checkMakeable({
       board,
@@ -128,6 +108,7 @@ export const useReversiGame = (): ReversiGameType => {
   return {
     board,
     currentPlayer,
+    winner,
     makeMove,
     checkMakeable: checkMakeableWrapper,
     reset,
