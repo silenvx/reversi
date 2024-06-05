@@ -29,6 +29,9 @@ export const createBoard = ({
 }: CreateBoardProps = configReversi): DiscType[][] =>
   [...Array(boardX)].map(() => Array(boardY).fill(Disc.empty as DiscType));
 
+export const copyBoard = (board: DiscType[][]): DiscType[][] =>
+  board.map((row) => row.slice().map((cell) => cell));
+
 /**
  * 盤面のコマの数を数える
  * @param board {DiscType[][]} リバーシの盤面
@@ -158,7 +161,6 @@ type ReverseProps = {
   row: number;
   col: number;
   currentPlayer: DiscType;
-  setDisc: (row: number, col: number, disc: DiscType) => void;
 };
 /**
  * 石をひっくり返す処理
@@ -166,7 +168,6 @@ type ReverseProps = {
  * @param {number} row 置く行
  * @param {number} col 置く列
  * @param {DiscType} currentPlayer 現在のプレイヤー
- * @param {(row: number, col: number, disc: DiscType) => void} setDisc 石を置く関数
  * @returns {DiscType[][]} 新しい盤面
  */
 export const reverse = ({
@@ -174,9 +175,9 @@ export const reverse = ({
   row,
   col,
   currentPlayer,
-  setDisc,
-}: ReverseProps) => {
-  setDisc(row, col, currentPlayer);
+}: ReverseProps): DiscType[][] => {
+  const newBoard = copyBoard(board);
+  newBoard[row][col] = currentPlayer;
 
   directions.forEach(([dx, dy]) => {
     let x = row + dx;
@@ -196,7 +197,7 @@ export const reverse = ({
           let nx = row + dx;
           let ny = col + dy;
           while (nx !== x || ny !== y) {
-            setDisc(nx, ny, currentPlayer);
+            newBoard[nx][ny] = currentPlayer;
             nx += dx;
             ny += dy;
           }
@@ -208,4 +209,5 @@ export const reverse = ({
       y += dy;
     }
   });
+  return newBoard;
 };
