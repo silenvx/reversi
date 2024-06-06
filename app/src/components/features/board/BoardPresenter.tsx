@@ -3,11 +3,13 @@ import { ReversiGameType } from "@/hooks/reversiGame";
 
 type BoardPresenterProps = {
   reversiGame: ReversiGameType;
+  isHighlightActive: boolean;
   handleClick: (row: number, col: number) => void;
 };
 
 export function BoardPresenter({
   reversiGame,
+  isHighlightActive,
   handleClick,
 }: BoardPresenterProps) {
   return (
@@ -31,6 +33,7 @@ export function BoardPresenter({
               key={String(`board-${i}-${j}`)}
               disc={reversiGame.board[i][j]}
               isMakeable={reversiGame.checkMakeable(i, j)}
+              isHighlight = {reversiGame.checkMakeable(i,j) && isHighlightActive}
               onClick={() => handleClick(i, j)}
             />
           ))}

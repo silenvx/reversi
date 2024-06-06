@@ -1,6 +1,8 @@
 import { BoardContainer } from "@/components/features/board/BoardContainer";
-import { Disc } from "@/domains/reversi/const";
+import { Disc, DiscType } from "@/domains/reversi/const";
 import { ReversiGameType } from "@/hooks/reversiGame";
+import { useSkills } from "@/hooks/reversiSkill";
+import SkillToggleButton from "../board/ui/skillToggle";
 
 type GamePresenterProps = {
   reversiGame: ReversiGameType;
@@ -33,6 +35,8 @@ export function GamePresenter({ reversiGame }: GamePresenterProps) {
         >
           Reset
         </button>
+        <SkillToggleButton user={Disc.white} skillName="highlight" />
+        <SkillToggleButton user={Disc.black} skillName="highlight" />
       </div>
     </div>
   );

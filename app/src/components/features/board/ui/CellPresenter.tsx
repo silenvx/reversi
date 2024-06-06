@@ -14,19 +14,21 @@ const viewDisc = (disc: DiscType) => {
 type CellPresenterProps = {
   disc: DiscType;
   isMakeable: boolean;
+  isHighlight: boolean;
   onClick: () => void;
 };
 
 export function CellPresenter({
   disc,
   isMakeable,
+  isHighlight,
   onClick,
 }: CellPresenterProps) {
   const discClass = viewDisc(disc);
   const hoverClass = isMakeable
     ? `hover:bg-gray-500 hover:opacity-50 cursor-pointer`
     : "";
-  const highlightClass = isMakeable ? "cellhighlight" : "";
+  const highlightClass =isHighlight ? "cellhighlight" : "";
 
   return (
     <div
