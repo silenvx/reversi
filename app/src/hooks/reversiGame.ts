@@ -21,8 +21,8 @@ export type ReversiGameType = {
 };
 
 /**
- * リバーシゲームのカスタムフック
- * @returns {ReversiGameType} リバーシゲームのカスタムフック
+ * リバーシのカスタムフック
+ * @returns {ReversiGameType} リバーシのカスタムフック
  * */
 export const useReversiGame = (): ReversiGameType => {
   const initialBoard = createBoard({
@@ -43,9 +43,9 @@ export const useReversiGame = (): ReversiGameType => {
 
   /**
    * 石を置く
-   * @param row 置く行
-   * @param col 置く列
-   * @returns 石を置けたかどうか
+   * @param {number} row 置く行
+   * @param {number} col 置く列
+   * @returns {boolean} 石を置けたかどうか
    */
   const makeMove = (row: number, col: number): boolean => {
     if (board[row][col] !== undefined) {
@@ -97,6 +97,12 @@ export const useReversiGame = (): ReversiGameType => {
     setWinner(newWinner);
   }, [discCount(board), passCount]);
 
+  /**
+   * 現在のboardとcurrentPlayerで石を置けるかどうかの判定
+   * @param row 置く行
+   * @param col 置く列
+   * @returns
+   */
   const checkMakeableWrapper = (row: number, col: number) =>
     checkMakeable({
       board,

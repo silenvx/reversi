@@ -17,10 +17,12 @@ type CreateBoardProps = {
   boardX: number;
   boardY: number;
 };
+
 /**
  * 新しい盤面を作成する
- * @param boardX {number} 盤面のx方向の大きさ
- * @param boardY {number} 盤面のy方向の大きさ
+ * @param {CreateBoardProps} props
+ * @param {number} props.BoardX 盤面のx方向の大きさ
+ * @param {number} props.BoardY 盤面のy方向の大きさ
  * @returns {DiscType[][]} 新しい盤面
  */
 export const createBoard = ({
@@ -34,7 +36,7 @@ export const copyBoard = (board: DiscType[][]): DiscType[][] =>
 
 /**
  * 盤面のコマの数を数える
- * @param board {DiscType[][]} リバーシの盤面
+ * @param {DiscType[][]} board リバーシの盤面
  * @returns {[number, number]} [blackCount, whiteCount] 黒と白のコマの数
  */
 export const discCount = (board: DiscType[][]): [number, number] => {
@@ -54,7 +56,7 @@ export const discCount = (board: DiscType[][]): [number, number] => {
 
 /**
  * 勝者を判定する
- * @param board {DiscType[][]} リバーシの盤面
+ * @param {DiscType[][]} board リバーシの盤面
  * @returns {WinnerType} 勝者
  */
 export const checkWinner = (board: DiscType[][]): WinnerType => {
@@ -80,10 +82,11 @@ type CheckMakeableProps = {
 
 /**
  * 石を置けるかどうかの判定
- * @param board {DiscType[][]} リバーシの盤面
- * @param row {number} 置く行
- * @param col {number} 置く列
- * @param currentPlayer {DiscType} 現在のプレイヤー
+ * @param {CheckMakeableProps} props
+ * @param {DiscType[][]} props.board リバーシの盤面
+ * @param {number} props.row 置く行
+ * @param {number} props.col 置く列
+ * @param {DiscType} props.currentPlayer 現在のプレイヤー
  * @returns {boolean} 石を置けるかどうか
  * */
 export const checkMakeable = ({
@@ -128,10 +131,12 @@ type CheckMakeableAllProps = {
   board: DiscType[][];
   currentPlayer: DiscType;
 };
+
 /**
  * どこかに石を置けるかどうかの判定
- * @param {DiscType[][]} board リバーシの盤面
- * @param {DiscType} currentPlayer 現在のプレイヤー
+ * @param {CheckMakeableAllProps} props
+ * @param {DiscType[][]} props.board リバーシの盤面
+ * @param {DiscType} props.currentPlayer 現在のプレイヤー
  * @returns {boolean} 石を置けるかどうか
  */
 export const checkMakeableAll = ({
@@ -155,19 +160,20 @@ export const checkMakeableAll = ({
   return false;
 };
 
-// 石をひっくり返す処理
 type ReverseProps = {
   board: DiscType[][];
   row: number;
   col: number;
   currentPlayer: DiscType;
 };
+
 /**
  * 石をひっくり返す処理
- * @param {DiscType[][]} board リバーシの盤面
- * @param {number} row 置く行
- * @param {number} col 置く列
- * @param {DiscType} currentPlayer 現在のプレイヤー
+ * @param {ReverseProps} props
+ * @param {DiscType[][]} props.board リバーシの盤面
+ * @param {number} props.row 置く行
+ * @param {number} props.col 置く列
+ * @param {DiscType} props.currentPlayer 現在のプレイヤー
  * @returns {DiscType[][]} 新しい盤面
  */
 export const reverse = ({
