@@ -21,8 +21,8 @@ type CreateBoardProps = {
 /**
  * 新しい盤面を作成する
  * @param {CreateBoardProps} props
- * @param {number} props.BoardX 盤面のx方向の大きさ
- * @param {number} props.BoardY 盤面のy方向の大きさ
+ * @param {number} props.boardX 盤面のx方向の大きさ
+ * @param {number} props.boardY 盤面のy方向の大きさ
  * @returns {DiscType[][]} 新しい盤面
  */
 export const createBoard = ({
@@ -31,8 +31,13 @@ export const createBoard = ({
 }: CreateBoardProps = configReversi): DiscType[][] =>
   [...Array(boardX)].map(() => Array(boardY).fill(Disc.empty as DiscType));
 
+/**
+ * 盤面をコピーする
+ * @param {DiscType[][]} board リバーシの盤面
+ * @returns {DiscType[][]} 新しい盤面
+ */
 export const copyBoard = (board: DiscType[][]): DiscType[][] =>
-  board.map((row) => row.slice().map((cell) => cell));
+  board.map((row) => [...row]);
 
 /**
  * 盤面のコマの数を数える
@@ -69,6 +74,9 @@ export const checkWinner = (board: DiscType[][]): WinnerType => {
   }
   if (blackCount < whiteCount) {
     return Winner.white;
+  }
+  if (blackCount === whiteCount) {
+    return Winner.draw;
   }
   return undefined;
 };
