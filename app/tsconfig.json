@@ -27,7 +27,8 @@
     },
   },
   "include": [
-    "src"
+    "src",
+    "jest.config.ts"
   ],
   "references": [
     {
