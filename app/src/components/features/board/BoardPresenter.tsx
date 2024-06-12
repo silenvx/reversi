@@ -33,7 +33,7 @@ export function BoardPresenter({
               key={String(`board-${i}-${j}`)}
               disc={reversiGame.board[i][j]}
               isMakeable={reversiGame.checkMakeable(i, j)}
-              isHighlight = {reversiGame.checkMakeable(i,j) && isHighlightActive}
+              isHighlight={reversiGame.checkMakeable(i, j) && isHighlightActive}
               onClick={() => handleClick(i, j)}
             />
           ))}

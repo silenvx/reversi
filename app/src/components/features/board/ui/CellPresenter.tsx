@@ -28,7 +28,7 @@ export function CellPresenter({
   const hoverClass = isMakeable
     ? `hover:bg-gray-500 hover:opacity-50 cursor-pointer`
     : "";
-  const highlightClass =isHighlight ? "cellhighlight" : "";
+  const highlightClass = isHighlight ? "cellhighlight" : "";
 
   return (
     <div
