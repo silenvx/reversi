@@ -4,7 +4,9 @@ import React, {
   useState,
   ReactNode,
   useCallback,
+  useMemo,
 } from "react";
+
 import { DiscType, Disc } from "@/domains/reversi/const";
 
 type SkillState = {
@@ -23,7 +25,7 @@ const SkillContext = createContext<SkillContextType>({
   toggleSkill: () => {},
 });
 
-export const SkillProvider = ({ children }: { children: ReactNode }) => {
+export function SkillProvider({ children }: { children: ReactNode }) {
   const [skills, setSkills] = useState<SkillState>({
     [Disc.black]: {},
     [Disc.white]: {},
@@ -41,17 +43,17 @@ export const SkillProvider = ({ children }: { children: ReactNode }) => {
     },
     [],
   );
-  return (
-    <SkillContext.Provider value={{ skills, toggleSkill }}>
-      {children}
-    </SkillContext.Provider>
+  return useMemo(
+    () => (
+      <SkillContext.Provider value={{ skills, toggleSkill }}>
+        {children}
+      </SkillContext.Provider>
+    ),
+    [skills, toggleSkill],
   );
-};
+}
 
 export const useSkills = () => {
   const context = useContext(SkillContext);
-  if (!context) {
-    throw new Error("useSkills must be used within a SkillProvider");
-  }
   return context;
 };
