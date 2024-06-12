@@ -1,7 +1,7 @@
 import { BoardContainer } from "@/components/features/board/BoardContainer";
+import SkillToggleButton from "@/components/features/board/ui/skillToggle";
 import { Disc } from "@/domains/reversi/const";
 import { ReversiGameType } from "@/hooks/reversiGame";
-import SkillToggleButton from "../board/ui/skillToggle";
 
 type GamePresenterProps = {
   reversiGame: ReversiGameType;
