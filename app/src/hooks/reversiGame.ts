@@ -9,6 +9,7 @@ import {
   discCount,
   reverse,
 } from "@/domains/reversi/compute";
+import { useMoveValues } from "@/hooks/moveValue";
 import { DiscType, Disc, Winner, WinnerType } from "@/domains/reversi/const";
 
 export type ReversiGameType = {
@@ -18,6 +19,7 @@ export type ReversiGameType = {
   makeMove: (row: number, col: number) => boolean;
   checkMakeable: (row: number, col: number) => boolean;
   reset: () => void;
+  moveValues: Array<{ row: number; col: number; value: number }>;
 };
 
 /**
@@ -111,6 +113,8 @@ export const useReversiGame = (): ReversiGameType => {
       currentPlayer,
     });
 
+  const { moveValues } = useMoveValues({ board, currentPlayer });
+
   return {
     board,
     currentPlayer,
@@ -118,5 +122,6 @@ export const useReversiGame = (): ReversiGameType => {
     makeMove,
     checkMakeable: checkMakeableWrapper,
     reset,
+    moveValues,
   };
 };
