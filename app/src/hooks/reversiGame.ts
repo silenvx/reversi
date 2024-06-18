@@ -9,8 +9,8 @@ import {
   discCount,
   reverse,
 } from "@/domains/reversi/compute";
-import { useMoveValues } from "@/hooks/moveValue";
 import { DiscType, Disc, Winner, WinnerType } from "@/domains/reversi/const";
+import { useMoveValues } from "@/hooks/moveValue";
 
 export type ReversiGameType = {
   board: DiscType[][];

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+
 import { DiscType } from "@/domains/reversi/const";
 import { calculateMoveValues } from "@/domains/reversi/evaluate";
 

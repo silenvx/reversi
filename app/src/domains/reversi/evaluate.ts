@@ -1,6 +1,5 @@
-import { DiscType, Disc } from "@/domains/reversi/const";
-import { weightedBoard } from "@/domains/reversi/const";
 import { reverse, checkMakeable } from "@/domains/reversi/compute";
+import { DiscType, Disc, weightedBoard } from "@/domains/reversi/const";
 /**
  * 盤面を評価する
  * @param {DiscType[][]} board リバーシの盤面
@@ -36,8 +35,8 @@ export const calculateMoveValues = (
 ): Array<{ row: number; col: number; value: number }> => {
   const moveValues: Array<{ row: number; col: number; value: number }> = [];
 
-  for (let row = 0; row < board.length; row++) {
-    for (let col = 0; col < board[row].length; col++) {
+  for (let row = 0; row < board.length; row += 1) {
+    for (let col = 0; col < board[row].length; col += 1) {
       if (checkMakeable({ board, row, col, currentPlayer })) {
         const newBoard = reverse({ board, row, col, currentPlayer });
         const value = evaluateBoard(newBoard, currentPlayer);
