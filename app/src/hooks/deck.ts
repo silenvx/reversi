@@ -1,4 +1,4 @@
-import { useState, useContext, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 import { SkillCard } from "@/domains/reversi/skillcard";
 
@@ -9,7 +9,7 @@ const cardlist: SkillCard[] = [
     id: 1,
     effect: 1,
     execute: (game) => {
-      console.log(game);
+      game.makeMove(1, 1);
     },
   },
 ];
@@ -28,4 +28,5 @@ export const useDeck = () => {
     },
     [cards],
   );
+  return { cards, drawCard };
 };

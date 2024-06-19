@@ -1,11 +1,13 @@
 import { GameContainer } from "@/components/features/game/GameContainer";
+import { DeckProvider } from "@/hooks/deckContext";
 import { SkillProvider } from "@/hooks/reversiSkill";
 
-export function Top()
-{
-  return(
+export function Top() {
+  return (
     <SkillProvider>
-      <GameContainer />
+      <DeckProvider>
+        <GameContainer />
+      </DeckProvider>
     </SkillProvider>
   );
 }
