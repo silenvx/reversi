@@ -1,5 +1,7 @@
 import { BoardContainer } from "@/components/features/board/BoardContainer";
-import SkillToggleButton from "@/components/features/board/ui/skillToggle";
+import { GaugeContainer } from "@/components/features/gauge/GaugeContainer";
+import { MenuContainer } from "@/components/features/menu/MenuContainer";
+import { PlayerInformationContainer } from "@/components/features/playerInformation/PlayerInformationContainer";
 import { Disc } from "@/domains/reversi/const";
 import { ReversiGameType } from "@/hooks/reversiGame";
 
@@ -9,33 +11,15 @@ type GamePresenterProps = {
 
 export function GamePresenter({ reversiGame }: GamePresenterProps) {
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col items-center gap-4">
-        <p className="text-4xl font-bold">
-          Player: {reversiGame.currentPlayer}
-          <br />
-          black:{" "}
-          {
-            reversiGame.board.flat().filter((disc) => disc === Disc.black)
-              .length
-          }
-          <br />
-          white:{" "}
-          {
-            reversiGame.board.flat().filter((disc) => disc === Disc.white)
-              .length
-          }
-        </p>
-        <BoardContainer reversiGame={reversiGame} />
-        <button
-          className="border border-black rounded p-2"
-          type="button"
-          onClick={reversiGame.reset}
-        >
-          Reset
-        </button>
-        <SkillToggleButton user={Disc.white} skillName="highlight" />
-        <SkillToggleButton user={Disc.black} skillName="highlight" />
+    <div className="flex h-screen justify-center bg-indigo-950 p-8">
+      <div className="flex flex-col justify-between">
+        <PlayerInformationContainer player={Disc.white} />
+        <div className="flex gap-4">
+          <MenuContainer reversiGame={reversiGame} />
+          <BoardContainer reversiGame={reversiGame} />
+          <GaugeContainer value={50} />
+        </div>
+        <PlayerInformationContainer player={Disc.black} />
       </div>
     </div>
   );

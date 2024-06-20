@@ -34,14 +34,16 @@ export function CellPresenter({
 
   return (
     <div
-      className={`border border-black w-20 h-20 bg-green-800 flex items-center justify-center ${highlightClass}`}
+      className={`flex aspect-[1/1] items-center justify-center border border-black bg-green-800 ${highlightClass}`}
       onClick={onClick}
       onKeyPress={onClick}
       tabIndex={0}
       role="button"
       aria-label="cell"
     >
-      <div className={`rounded-full w-16 h-16 ${discClass} ${hoverClass}`} />
+      <div
+        className={`h-full w-full rounded-full p-1 ${discClass} ${hoverClass}`}
+      />
     </div>
   );
 }
