@@ -2,14 +2,30 @@ import { useState, useCallback } from "react";
 
 import { SkillCard } from "@/domains/reversi/skillcard";
 
+// スキルの実装はいったん適当
 const cardlist: SkillCard[] = [
   {
-    name: "test",
-    description: "test",
+    name: "ゲームリセット",
+    description: "ゲームをリセットします。",
     id: 1,
-    effect: 1,
+    effect: 60,
     execute: (game) => {
-      game.makeMove(1, 1);
+      game.reset();
+    },
+  },
+  {
+    name: "ランダム配置",
+    description: "ランダムに配置します",
+    id: 2,
+    effect: 20,
+    execute: (game) => {
+      for (let i = 0; i < 8; i += 1) {
+        for (let j = 0; j < 8; j += 1) {
+          if (game.makeMove(i, j)) {
+            return;
+          }
+        }
+      }
     },
   },
 ];
@@ -21,10 +37,22 @@ export const useDeck = () => {
       if (cards.length === 0) {
         return null;
       }
-      // TODO:ここは優勢劣勢によってカードの引き方を変える
-      const card = cards[adv];
-      setCards(cards.filter((c) => c.id !== card.id));
-      return card;
+
+      // TODO : もうちょっと優劣によるカードの選択を考える
+      let cardcandidates = cards;
+      if (adv < 0) {
+        cardcandidates = cards.filter((c) => c.effect < 50);
+      } else {
+        cardcandidates = cards.filter((c) => c.effect >= 50);
+      }
+
+      if (cardcandidates.length === 0) {
+        cardcandidates = cards;
+      }
+      const drawedCard =
+        cardcandidates[Math.floor(Math.random() * cardcandidates.length)];
+      setCards(cards.filter((c) => c.id !== drawedCard.id));
+      return drawedCard;
     },
     [cards],
   );
