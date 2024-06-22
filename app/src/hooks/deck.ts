@@ -30,8 +30,20 @@ const cardlist: SkillCard[] = [
   },
 ];
 
+/**
+ * 山札のカスタムフック
+ * @param cards 山札のカード
+ * @function drawCard カードを山札から引く関数
+ * @returns {{ cards: any; drawCard: any; }}
+ */
 export const useDeck = () => {
   const [cards, setCards] = useState<SkillCard[]>(cardlist);
+
+  /**
+   * カードを引く
+   * @param {number} adv 引くユーザーの優勢度
+   * @type {SkillCard | null} カード or null(山札がない場合)
+   */
   const drawCard = useCallback(
     (adv: number): SkillCard | null => {
       if (cards.length === 0) {

@@ -9,7 +9,7 @@ type GamePresenterProps = {
   whiteHands: SkillCard[];
   drawCardForPlayer: (player: DiscType, adv: number) => void;
   playCard: (
-    plaryer: DiscType,
+    player: DiscType,
     cardId: SkillCard,
     game: ReversiGameType,
   ) => void;
@@ -76,6 +76,7 @@ export function GamePresenter({
         </button>
         <button
           type="button"
+          // TODO:仮で1を渡している。本来は優劣に関する情報を渡す
           onClick={() => drawCardForPlayer(reversiGame.currentPlayer, 1)}
         >
           Draw(マスを踏んだ時にカードを引くけどいったんボタンでひかせる)

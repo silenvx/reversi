@@ -5,6 +5,12 @@ import { SkillCard } from "@/domains/reversi/skillcard";
 import { useHands } from "@/hooks/hand";
 import { ReversiGameType } from "@/hooks/reversiGame";
 
+/**
+ * ユーザーの手札のコンテキストInterface
+ *
+ * @interface HandContextType
+ * @typedef {HandContextType}
+ */
 interface HandContextType {
   blackHands: SkillCard[];
   whiteHands: SkillCard[];
