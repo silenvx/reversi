@@ -12,14 +12,20 @@ type GamePresenterProps = {
 export function GamePresenter({ reversiGame }: GamePresenterProps) {
   return (
     <div className="flex h-screen justify-center bg-indigo-950 p-8">
-      <div className="flex flex-col justify-between">
-        <PlayerInformationContainer player={Disc.white} />
-        <div className="flex gap-4">
+      <div className="flex w-full flex-col justify-between">
+        <PlayerInformationContainer
+          reversiGame={reversiGame}
+          player={Disc.black}
+        />
+        <div className="flex w-full justify-center gap-4">
           <MenuContainer reversiGame={reversiGame} />
           <BoardContainer reversiGame={reversiGame} />
           <GaugeContainer value={50} />
         </div>
-        <PlayerInformationContainer player={Disc.black} />
+        <PlayerInformationContainer
+          reversiGame={reversiGame}
+          player={Disc.white}
+        />
       </div>
     </div>
   );

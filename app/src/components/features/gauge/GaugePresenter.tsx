@@ -1,11 +1,14 @@
 const gaugeClass = (value: number) => {
-  if (value < 30) {
-    return "from-red-500 to-purple-500";
-  }
-  if (value < 60) {
-    return "from-red-500 via-purple-500 to-blue-500";
-  }
-  return "from-purple-500 to-blue-500";
+  let validValue = value;
+  if (value < 0) validValue = 0;
+  if (value > 100) validValue = 100;
+
+  // TODO: きれいに表示できる数式を考える
+  const fromPercentage = validValue;
+  const viaPercentage = validValue;
+  const toPercentage = validValue;
+
+  return `from-${fromPercentage}% via-${viaPercentage}% to-${toPercentage}%`;
 };
 
 type GaugePresenterProps = {
@@ -16,7 +19,7 @@ export function GaugePresenter({ value }: GaugePresenterProps) {
   // 縦のバーを表示する
   return (
     <div
-      className={`h-96 w-6 rounded-full bg-gradient-to-b ${gaugeClass(value)}`}
+      className={`h-96 w-6 rounded-full bg-gradient-to-b from-red-500 via-purple-500 to-blue-500 ${gaugeClass(value)}`}
     />
   );
 }
