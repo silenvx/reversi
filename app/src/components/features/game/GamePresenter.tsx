@@ -46,6 +46,7 @@ export function GamePresenter({
           {blackHands.map((card) => (
             <button
               type="button"
+              disabled={reversiGame.currentPlayer !== Disc.black}
               onClick={() => playCard(Disc.black, card, reversiGame)}
               key={card.id}
               className="border border-black rounded p-2"
@@ -54,10 +55,12 @@ export function GamePresenter({
             </button>
           ))}
         </div>
+        <p>Blackの手札</p>
         <BoardContainer reversiGame={reversiGame} />
         <div className="flex gap-2">
           {whiteHands.map((card) => (
             <button
+              disabled={reversiGame.currentPlayer !== Disc.white}
               key={card.id}
               type="button"
               className="border border-black rounded p-2"
@@ -67,6 +70,7 @@ export function GamePresenter({
             </button>
           ))}
         </div>
+        <p>Whiteの手札</p>
         <button
           className="border border-black rounded p-2"
           type="button"

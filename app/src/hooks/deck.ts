@@ -1,35 +1,9 @@
 import { useState, useCallback } from "react";
 
-import { SkillCard } from "@/domains/reversi/skillcard";
+import { SkillCard, createInitialSkillCard } from "@/domains/reversi/skillcard";
 
 // スキルの実装はいったん適当
-const cardlist: SkillCard[] = [
-  {
-    name: "ゲームリセット",
-    description: "ゲームをリセットします。",
-    id: 1,
-    effect: 60,
-    execute: (game) => {
-      game.reset();
-    },
-  },
-  {
-    name: "ランダム配置",
-    description: "ランダムに配置します",
-    id: 2,
-    effect: 20,
-    execute: (game) => {
-      for (let i = 0; i < 8; i += 1) {
-        for (let j = 0; j < 8; j += 1) {
-          if (game.makeMove(i, j)) {
-            return;
-          }
-        }
-      }
-    },
-  },
-];
-
+const cardlist: SkillCard[] = createInitialSkillCard();
 /**
  * 山札のカスタムフック
  * @param cards 山札のカード

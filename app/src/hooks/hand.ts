@@ -45,16 +45,16 @@ export const useHands = () => {
    */
   const playCard = useCallback(
     (player: DiscType, selectedCard: SkillCard, game: ReversiGameType) => {
-      selectedCard.execute(game);
-      const card = player === Disc.black ? blackHands : whiteHands;
-      const newHands = card.filter((c) => c.id !== selectedCard.id);
-      if (player === Disc.black) {
-        setBlackHands(newHands);
-      } else {
-        setWhiteHands(newHands);
+      if (selectedCard.execute(game)) {
+        if (player === Disc.black) {
+          setBlackHands((prev) => prev.filter((c) => c.id !== selectedCard.id));
+        } else {
+          setWhiteHands((prev) => prev.filter((c) => c.id !== selectedCard.id));
+        }
       }
     },
     [],
   );
+
   return { blackHands, whiteHands, drawCardForPlayer, playCard };
 };
