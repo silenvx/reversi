@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Top } from "@/components/pages/Top";
+import { Home } from "@/components/pages/Home";
 import { appURL } from "@/config/url";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         {/* pathのURLにアクセスするとelementのコンポーネントを呼び出す */}
         <Route path={appURL.top} element={<Top />} />
+        <Route path={appURL.home} element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
