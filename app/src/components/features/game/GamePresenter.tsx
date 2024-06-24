@@ -20,6 +20,7 @@ export function GamePresenter({ reversiGame }: GamePresenterProps) {
         <div className="flex w-full justify-center gap-4">
           <MenuContainer reversiGame={reversiGame} />
           <BoardContainer reversiGame={reversiGame} />
+          {/* TODO: GaugeContainerのvalueは仮の値 */}
           <GaugeContainer value={50} />
         </div>
         <PlayerInformationContainer

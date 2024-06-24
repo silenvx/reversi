@@ -17,7 +17,7 @@ export function PlayerInformationPresenter({
   return (
     <div className={`flex flex-row gap-10 ${rotateClass}`}>
       <ScoreContainer reversiGame={reversiGame} player={player} />
-      <HandContainer player={player} />
+      <HandContainer reversiGame={reversiGame} player={player} />
     </div>
   );
 }
