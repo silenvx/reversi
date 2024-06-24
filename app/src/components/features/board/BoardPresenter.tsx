@@ -14,21 +14,9 @@ export function BoardPresenter({
 }: BoardPresenterProps) {
   return (
     <div>
-      <div className="flex">
-        {/* 左上の隙間 */}
-        <div className="w-20 h-20 flex items-center justify-center" />
-        {[...Array(reversiGame.board[0].length).keys()].map((i) => (
-          <div key={i} className="w-20 h-20 flex items-center justify-center">
-            <div>{String.fromCharCode("A".charCodeAt(0) + i)}</div>
-          </div>
-        ))}
-      </div>
-      {reversiGame.board.map((row, i) => (
-        <div key={String(`board-${i}`)} className="flex">
-          <div className="w-20 h-20 flex items-center justify-center">
-            <div>{i + 1}</div>
-          </div>
-          {row.map((_, j) => (
+      <div className="grid w-96 grid-cols-8 grid-rows-8">
+        {reversiGame.board.map((row, i) =>
+          row.map((_, j) => (
             <CellPresenter
               key={String(`board-${i}-${j}`)}
               disc={reversiGame.board[i][j]}
@@ -36,9 +24,9 @@ export function BoardPresenter({
               isHighlight={reversiGame.checkMakeable(i, j) && isHighlightActive}
               onClick={() => handleClick(i, j)}
             />
-          ))}
-        </div>
-      ))}
+          )),
+        )}
+      </div>
     </div>
   );
 }

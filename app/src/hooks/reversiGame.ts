@@ -17,6 +17,7 @@ export type ReversiGameType = {
   winner: WinnerType;
   makeMove: (row: number, col: number) => boolean;
   checkMakeable: (row: number, col: number) => boolean;
+  getScore: (disc: DiscType) => number;
   reset: () => void;
   revertMove: (count?: number) => boolean;
 };
@@ -132,12 +133,21 @@ export const useReversiGame = (): ReversiGameType => {
       currentPlayer,
     });
 
+  const getScore = (disc: DiscType) => {
+    const [blackCount, whiteCount] = discCount(board);
+    if (disc === Disc.black) {
+      return blackCount;
+    }
+    return whiteCount;
+  };
+
   return {
     board,
     currentPlayer,
     winner,
     makeMove,
     checkMakeable: checkMakeableWrapper,
+    getScore,
     reset,
     revertMove,
   };
