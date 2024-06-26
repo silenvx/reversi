@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Top } from "@/components/pages/Top";
 import { Home } from "@/components/pages/Home";
+import { Top } from "@/components/pages/Top";
 import { appURL } from "@/config/url";
 
 function App() {

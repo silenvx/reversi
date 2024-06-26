@@ -18,6 +18,8 @@ export type ReversiGameType = {
   makeMove: (row: number, col: number) => boolean;
   checkMakeable: (row: number, col: number) => boolean;
   reset: () => void;
+  hint: () => void;
+  isVisible: boolean;
 };
 
 /**
