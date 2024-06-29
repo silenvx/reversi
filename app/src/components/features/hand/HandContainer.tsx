@@ -1,7 +1,10 @@
 import { HandPresenter } from "@/components/features/hand/HandPresenter";
 import { Disc, DiscType } from "@/domains/reversi/const";
+import { ExecuteSkillCard } from "@/domains/reversi/skillExecutor";
+import { SkillCard } from "@/domains/reversi/skillcard";
 import { useHandContext } from "@/hooks/handContext";
 import { ReversiGameType } from "@/hooks/reversiGame";
+import { useSkills } from "@/hooks/reversiSkill";
 
 type HandContainerProps = {
   reversiGame: ReversiGameType;
@@ -9,17 +12,29 @@ type HandContainerProps = {
 };
 
 export function HandContainer({ reversiGame, player }: HandContainerProps) {
-  const { blackHands, whiteHands, drawCardForPlayer, playCard } =
-    useHandContext();
+  const handsContext = useHandContext();
+  const skills = useSkills();
+  const playCardWithExecutor = (
+    currentplayer: DiscType,
+    card: SkillCard,
+    game: ReversiGameType,
+  ) => {
+    if (currentplayer !== game.currentPlayer) {
+      return;
+    }
+    if (ExecuteSkillCard(card.id, game, handsContext, skills)) {
+      handsContext.discardCard(player, card.id);
+    }
+  };
 
-  const hands = player === Disc.black ? blackHands : whiteHands;
+  const hands =
+    player === Disc.black ? handsContext.blackHands : handsContext.whiteHands;
   return (
     <HandPresenter
       reversiGame={reversiGame}
       player={player}
       hands={hands}
-      drawCardForPlayer={drawCardForPlayer}
-      playCard={playCard}
+      playCard={playCardWithExecutor}
     />
   );
 }

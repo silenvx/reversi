@@ -27,9 +27,9 @@ export const useHands = () => {
         return;
       }
       if (player === Disc.black) {
-        setBlackHands([...blackHands, card]);
+        setBlackHands((prev) => [...prev, card]);
       } else {
-        setWhiteHands([...whiteHands, card]);
+        setWhiteHands((prev) => [...prev, card]);
       }
     },
     [drawCard],
@@ -48,9 +48,9 @@ export const useHands = () => {
   const addCard = useCallback(
     (player: DiscType, card: SkillCard) => {
       if (player === Disc.black) {
-        setBlackHands([...blackHands, card]);
+        setBlackHands((prev) => [...prev, card]);
       } else {
-        setWhiteHands([...whiteHands, card]);
+        setWhiteHands((prev) => [...prev, card]);
       }
     },
     [blackHands, whiteHands],

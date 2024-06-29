@@ -52,7 +52,6 @@ const stealSkillCard = (
 };
 
 const lightup = (game: ReversiGameType, skills: SkillContextType): boolean => {
-  console.log("lightup");
   skills.toggleSkill(
     game.currentPlayer as Exclude<DiscType, undefined>,
     "highlight",
