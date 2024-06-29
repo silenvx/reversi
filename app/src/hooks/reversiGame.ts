@@ -81,8 +81,6 @@ export const useReversiGame = (): ReversiGameType => {
     setBoardHistory(newBoard);
     if (count % 2 === 1) {
       setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
-    } else {
-      setCurrentPlayer(currentPlayer);
     }
     return true;
   };

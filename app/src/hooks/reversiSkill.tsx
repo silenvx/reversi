@@ -15,7 +15,7 @@ type SkillState = {
   };
 };
 
-type SkillContextType = {
+export type SkillContextType = {
   skills: SkillState;
   toggleSkill: (user: Exclude<DiscType, undefined>, skillName: string) => void;
 };

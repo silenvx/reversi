@@ -3,7 +3,6 @@ import { useCallback, useState } from "react";
 import { DiscType, Disc } from "@/domains/reversi/const";
 import { SkillCard } from "@/domains/reversi/skillcard";
 import { useDeckContext } from "@/hooks/deckContext";
-import { ReversiGameType } from "@/hooks/reversiGame";
 
 /**
  * ユーザーの手札を管理するフック
@@ -35,6 +34,27 @@ export const useHands = () => {
     },
     [drawCard],
   );
+  const discardCard = useCallback(
+    (player: DiscType, cardId: string) => {
+      if (player === Disc.black) {
+        setBlackHands((prev) => prev.filter((card) => card.id !== cardId));
+      } else {
+        setWhiteHands((prev) => prev.filter((card) => card.id !== cardId));
+      }
+    },
+    [blackHands, whiteHands],
+  );
+
+  const addCard = useCallback(
+    (player: DiscType, card: SkillCard) => {
+      if (player === Disc.black) {
+        setBlackHands([...blackHands, card]);
+      } else {
+        setWhiteHands([...whiteHands, card]);
+      }
+    },
+    [blackHands, whiteHands],
+  );
 
   /**
    * ユーザーがカードをプレイする
@@ -43,18 +63,6 @@ export const useHands = () => {
    * @param {ReversiGameType} game ゲームboard
    * @type {*}
    */
-  const playCard = useCallback(
-    (player: DiscType, selectedCard: SkillCard, game: ReversiGameType) => {
-      if (selectedCard.execute(game)) {
-        if (player === Disc.black) {
-          setBlackHands((prev) => prev.filter((c) => c.id !== selectedCard.id));
-        } else {
-          setWhiteHands((prev) => prev.filter((c) => c.id !== selectedCard.id));
-        }
-      }
-    },
-    [],
-  );
 
-  return { blackHands, whiteHands, drawCardForPlayer, playCard };
+  return { blackHands, whiteHands, drawCardForPlayer, discardCard, addCard };
 };

@@ -3,7 +3,6 @@ import { createContext, useContext } from "react";
 import { DiscType } from "@/domains/reversi/const";
 import { SkillCard } from "@/domains/reversi/skillcard";
 import { useHands } from "@/hooks/hand";
-import { ReversiGameType } from "@/hooks/reversiGame";
 
 /**
  * ユーザーの手札のコンテキストInterface
@@ -11,15 +10,12 @@ import { ReversiGameType } from "@/hooks/reversiGame";
  * @interface HandContextType
  * @typedef {HandContextType}
  */
-interface HandContextType {
+export interface HandContextType {
   blackHands: SkillCard[];
   whiteHands: SkillCard[];
   drawCardForPlayer: (player: DiscType, score: number) => void;
-  playCard: (
-    player: DiscType,
-    cardId: SkillCard,
-    game: ReversiGameType,
-  ) => void;
+  discardCard: (player: DiscType, cardId: string) => void;
+  addCard: (player: DiscType, card: SkillCard) => void;
 }
 
 const HandContext = createContext<HandContextType | undefined>(undefined);

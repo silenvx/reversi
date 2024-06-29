@@ -1,14 +1,27 @@
 import { useEffect } from "react";
 
 import { GamePresenter } from "@/components/features/game/GamePresenter";
-import { Winner } from "@/domains/reversi/const";
+import { DiscType, Winner } from "@/domains/reversi/const";
+import { ExecuteSkillCard } from "@/domains/reversi/skillExecutor";
+import { SkillCard } from "@/domains/reversi/skillcard";
 import { useHandContext } from "@/hooks/handContext";
-import { useReversiGame } from "@/hooks/reversiGame";
+import { ReversiGameType, useReversiGame } from "@/hooks/reversiGame";
+import { useSkills } from "@/hooks/reversiSkill";
 
 export function GameContainer() {
   const reversiGame = useReversiGame();
-  const { blackHands, whiteHands, drawCardForPlayer, playCard } =
-    useHandContext();
+  const handContext = useHandContext();
+  const reversiSkill = useSkills();
+
+  const playCardWithExecutor = (
+    player: DiscType,
+    card: SkillCard,
+    game: ReversiGameType,
+  ) => {
+    if (ExecuteSkillCard(card.id, game, handContext, reversiSkill)) {
+      handContext.discardCard(player, card.id);
+    }
+  };
 
   // 勝者が決まったらアラートを表示してリセット
   useEffect(() => {
@@ -34,10 +47,10 @@ export function GameContainer() {
   return (
     <GamePresenter
       reversiGame={reversiGame}
-      whiteHands={whiteHands}
-      blackHands={blackHands}
-      drawCardForPlayer={drawCardForPlayer}
-      playCard={playCard}
+      whiteHands={handContext.whiteHands}
+      blackHands={handContext.blackHands}
+      drawCardForPlayer={handContext.drawCardForPlayer}
+      playCard={playCardWithExecutor}
     />
   );
 }

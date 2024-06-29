@@ -1,5 +1,3 @@
-import { ReversiGameType } from "@/hooks/reversiGame";
-
 /**
  * スキルカード
  *
@@ -8,52 +6,52 @@ import { ReversiGameType } from "@/hooks/reversiGame";
  * @typedef {SkillCard}
  * @property {string} name スキルカードの名前
  * @property {string} description スキルカードの効果説明文
- * @property {number} id スキルカードのID(使うかは不明)
+ * @property {string} id スキルカードのID
  * @property {number} effect スキルカードの影響度合い
  * @property {(game: ReversiGameType) => void} execute スキルカードの効果を実行する関数
  */
 export interface SkillCard {
   name: string;
   description: string;
-  id: number;
+  id: string;
   effect: number;
-  execute: (game: ReversiGameType) => boolean;
 }
 
-export function createInitialSkillCard(): SkillCard[] {
-  return [
-    {
-      name: "タイムリープ",
-      description: "前の自身の手番からやり直せます",
-      id: 1,
-      effect: 60,
-      execute: (game): boolean => game.revertMove(2),
-    },
-    {
-      name: "ランダム配置",
-      description: "ランダムに配置します",
-      id: 2,
-      effect: 20,
-      execute: (game): boolean => {
-        for (let i = 0; i < 8; i += 1) {
-          for (let j = 0; j < 8; j += 1) {
-            if (game.makeMove(i, j)) {
-              return true;
-            }
-          }
-        }
-        return false;
-      },
-    },
-    {
-      name: "Reset",
-      description: "リセットします",
-      id: 3,
-      effect: 100,
-      execute: (game): boolean => {
-        game.reset();
-        return true;
-      },
-    },
-  ];
-}
+export const defaultSkillCards: SkillCard[] = [
+  {
+    name: "相手のカードを1枚捨てる",
+    description: "相手の手札を1枚捨てる",
+    id: "discardOpponentCard",
+    effect: 1,
+  },
+  {
+    name: "リセット",
+    description: "ゲームをリセットする",
+    id: "Reset",
+    effect: 1,
+  },
+  {
+    name: "ランダムに置く",
+    description: "ランダムな場所に石を置く",
+    id: "makeRamdom",
+    effect: 1,
+  },
+  {
+    name: "タイムリープ",
+    description: "1ターン前に戻る",
+    id: "timeLeap",
+    effect: 1,
+  },
+  {
+    name: "相手のカードを1枚奪う",
+    description: "相手の手札を1枚奪う",
+    id: "stealOpponentCard",
+    effect: 1,
+  },
+  {
+    name: "ライトアップ",
+    description: "石を置ける場所を表示する",
+    id: "lightup",
+    effect: 1,
+  },
+];
