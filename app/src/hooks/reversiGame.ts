@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { configReversi } from "@/config/reversi";
 import {
@@ -9,8 +9,14 @@ import {
   discCount,
   reverse,
 } from "@/domains/reversi/compute";
-import { DiscType, Disc, Winner, WinnerType } from "@/domains/reversi/const";
-import { useMoveValues } from "@/hooks/moveValue";
+import {
+  DiscType,
+  Disc,
+  Winner,
+  WinnerType,
+  MoveScore,
+} from "@/domains/reversi/const";
+import { calculateMoveScores } from "@/domains/reversi/evaluate";
 
 export type ReversiGameType = {
   board: DiscType[][];
@@ -21,7 +27,7 @@ export type ReversiGameType = {
   getScore: (disc: DiscType) => number;
   reset: () => void;
   revertMove: (count?: number) => boolean;
-  moveValues: Array<{ row: number; col: number; value: number }>;
+  moveScores: Array<MoveScore>;
 };
 
 /**
@@ -47,6 +53,7 @@ export const useReversiGame = (): ReversiGameType => {
   const [boradHistory, setBoardHistory] = useState<DiscType[][][]>([
     initialBoard,
   ]);
+  const [moveScores, setMoveScores] = useState<Array<MoveScore>>([]);
 
   /**
    * 石を置く
@@ -143,7 +150,17 @@ export const useReversiGame = (): ReversiGameType => {
     return whiteCount;
   };
 
-  const { moveValues } = useMoveValues({ board, currentPlayer });
+  // board と currentPlayer が変更されない限り同じ関数を返すメモ化された calculateMoveScores 関数
+  const memorizedCalculateMoceScores = useCallback(
+    () => calculateMoveScores(board, currentPlayer),
+    [board, currentPlayer],
+  );
+
+  // メモ化された関数が変更されたときに新たな盤面スコアがセットされる
+  useEffect(() => {
+    const scores = memorizedCalculateMoceScores();
+    setMoveScores(scores);
+  }, [memorizedCalculateMoceScores]);
 
   return {
     board,
@@ -154,6 +171,6 @@ export const useReversiGame = (): ReversiGameType => {
     getScore,
     reset,
     revertMove,
-    moveValues,
+    moveScores,
   };
 };

@@ -26,3 +26,11 @@ export const weightedBoard: number[][] = [
   [-12, -15, -3, -3, -3, -3, -15, -12],
   [30, -12, 0, -1, -1, 0, -12, 30],
 ];
+
+//
+
+export type MoveScore = {
+  row: number;
+  col: number;
+  score: number;
+};

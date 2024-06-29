@@ -1,5 +1,11 @@
 import { reverse, checkMakeable } from "@/domains/reversi/compute";
-import { DiscType, Disc, weightedBoard } from "@/domains/reversi/const";
+import {
+  DiscType,
+  Disc,
+  weightedBoard,
+  MoveScore,
+} from "@/domains/reversi/const";
+
 /**
  * 盤面を評価する
  * @param {DiscType[][]} board リバーシの盤面
@@ -11,15 +17,17 @@ export const evaluateBoard = (
   currentPlayer: DiscType,
 ): number => {
   let score = 0;
-  board.forEach((row, rowIndex) => {
-    row.forEach((cell, colIndex) => {
-      if (cell === currentPlayer) {
-        score += weightedBoard[rowIndex][colIndex];
-      } else if (cell !== Disc.empty) {
-        score -= weightedBoard[rowIndex][colIndex];
+
+  for (let row = 0; row < board.length; row += 1) {
+    for (let col = 0; col < board[row].length; col += 1) {
+      if (board[row][col] === currentPlayer) {
+        score += weightedBoard[row][col];
+      } else if (board[row][col] !== Disc.empty) {
+        score -= weightedBoard[row][col];
       }
-    });
-  });
+    }
+  }
+
   return score;
 };
 
@@ -27,23 +35,23 @@ export const evaluateBoard = (
  * すべての置けるマスに対する評価変動を計算する
  * @param {DiscType[][]} board リバーシの盤面
  * @param {DiscType} currentPlayer 現在のプレイヤー
- * @returns {Array<{row: number, col: number, value: number}>} 各マスの評価変動
+ * @returns {Array<{row: number, col: number, score: number}>} 各マスの評価変動
  */
-export const calculateMoveValues = (
+export const calculateMoveScores = (
   board: DiscType[][],
   currentPlayer: DiscType,
-): Array<{ row: number; col: number; value: number }> => {
-  const moveValues: Array<{ row: number; col: number; value: number }> = [];
+): MoveScore[] => {
+  const moveScores: MoveScore[] = [];
 
   for (let row = 0; row < board.length; row += 1) {
     for (let col = 0; col < board[row].length; col += 1) {
       if (checkMakeable({ board, row, col, currentPlayer })) {
         const newBoard = reverse({ board, row, col, currentPlayer });
-        const value = evaluateBoard(newBoard, currentPlayer);
-        moveValues.push({ row, col, value });
+        const score = evaluateBoard(newBoard, currentPlayer);
+        moveScores.push({ row, col, score });
       }
     }
   }
 
-  return moveValues;
+  return moveScores;
 };
