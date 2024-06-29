@@ -18,12 +18,12 @@ export const useHands = () => {
   /**
    * ユーザーがカードを山札から引き、手札に加える
    * @param {DiscType} player ユーザー
-   * @param {number} adv ユーザーの優勢度
+   * @param {number} score ユーザーの優勢度
    * @type {*}
    */
   const drawCardForPlayer = useCallback(
-    (player: DiscType, adv: number) => {
-      const card = drawCard(adv);
+    (player: DiscType, score: number) => {
+      const card = drawCard(score);
       if (card == null) {
         return;
       }

@@ -14,7 +14,7 @@ import { ReversiGameType } from "@/hooks/reversiGame";
 interface HandContextType {
   blackHands: SkillCard[];
   whiteHands: SkillCard[];
-  drawCardForPlayer: (player: DiscType, adv: number) => void;
+  drawCardForPlayer: (player: DiscType, score: number) => void;
   playCard: (
     player: DiscType,
     cardId: SkillCard,
