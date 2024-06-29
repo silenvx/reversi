@@ -3,9 +3,9 @@ import { DiscType, Disc } from "@/domains/reversi/const";
 const viewDisc = (disc: DiscType) => {
   switch (disc) {
     case Disc.black:
-      return "bg-black";
+      return "bg-red-500/10 border-red-500/80 border-2 shadow shadow-red-500/50 backdrop-blur-sm";
     case Disc.white:
-      return "bg-white";
+      return "bg-blue-500/10 border-blue-500/80 border-2 shadow shadow-blue-500/50 backdrop-blur-sm";
     default:
       return "";
   }
@@ -34,14 +34,16 @@ export function CellPresenter({
 
   return (
     <div
-      className={`border border-black w-20 h-20 bg-green-800 flex items-center justify-center ${highlightClass}`}
+      className={`flex aspect-[1/1] items-center justify-center border border-orange-500 bg-orange-500/5 shadow shadow-orange-500 backdrop-blur-sm ${highlightClass}`}
       onClick={onClick}
       onKeyPress={onClick}
       tabIndex={0}
       role="button"
       aria-label="cell"
     >
-      <div className={`rounded-full w-16 h-16 ${discClass} ${hoverClass}`} />
+      <div
+        className={`h-full w-full rounded-full p-1 ${discClass} ${hoverClass}`}
+      />
     </div>
   );
 }
