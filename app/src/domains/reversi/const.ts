@@ -1,7 +1,7 @@
 // コマの定数
 export const Disc = {
-  black: "black",
-  white: "white",
+  black: "black", // 赤
+  white: "white", // 青
   empty: undefined,
 };
 export type DiscType = (typeof Disc)[keyof typeof Disc];
