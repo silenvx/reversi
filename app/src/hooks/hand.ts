@@ -3,7 +3,6 @@ import { useCallback, useState } from "react";
 import { DiscType, Disc } from "@/domains/reversi/const";
 import { SkillCard } from "@/domains/reversi/skillcard";
 import { useDeckContext } from "@/hooks/deckContext";
-import { ReversiGameType } from "@/hooks/reversiGame";
 
 /**
  * ユーザーの手札を管理するフック
@@ -18,22 +17,43 @@ export const useHands = () => {
   /**
    * ユーザーがカードを山札から引き、手札に加える
    * @param {DiscType} player ユーザー
-   * @param {number} adv ユーザーの優勢度
+   * @param {number} score ユーザーの優勢度
    * @type {*}
    */
   const drawCardForPlayer = useCallback(
-    (player: DiscType, adv: number) => {
-      const card = drawCard(adv);
+    (player: DiscType, score: number) => {
+      const card = drawCard(score);
       if (card == null) {
         return;
       }
       if (player === Disc.black) {
-        setBlackHands([...blackHands, card]);
+        setBlackHands((prev) => [...prev, card]);
       } else {
-        setWhiteHands([...whiteHands, card]);
+        setWhiteHands((prev) => [...prev, card]);
       }
     },
     [drawCard],
+  );
+  const discardCard = useCallback(
+    (player: DiscType, cardId: string) => {
+      if (player === Disc.black) {
+        setBlackHands((prev) => prev.filter((card) => card.id !== cardId));
+      } else {
+        setWhiteHands((prev) => prev.filter((card) => card.id !== cardId));
+      }
+    },
+    [blackHands, whiteHands],
+  );
+
+  const addCard = useCallback(
+    (player: DiscType, card: SkillCard) => {
+      if (player === Disc.black) {
+        setBlackHands((prev) => [...prev, card]);
+      } else {
+        setWhiteHands((prev) => [...prev, card]);
+      }
+    },
+    [blackHands, whiteHands],
   );
 
   /**
@@ -43,18 +63,6 @@ export const useHands = () => {
    * @param {ReversiGameType} game ゲームboard
    * @type {*}
    */
-  const playCard = useCallback(
-    (player: DiscType, selectedCard: SkillCard, game: ReversiGameType) => {
-      if (selectedCard.execute(game)) {
-        if (player === Disc.black) {
-          setBlackHands((prev) => prev.filter((c) => c.id !== selectedCard.id));
-        } else {
-          setWhiteHands((prev) => prev.filter((c) => c.id !== selectedCard.id));
-        }
-      }
-    },
-    [],
-  );
 
-  return { blackHands, whiteHands, drawCardForPlayer, playCard };
+  return { blackHands, whiteHands, drawCardForPlayer, discardCard, addCard };
 };

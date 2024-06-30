@@ -225,3 +225,16 @@ export const reverse = ({
   });
   return newBoard;
 };
+
+/**
+ * スキルカードを引けるかどうかを判定する
+ * 負の値であるほど引きやすくなる
+ *
+ * @param {number} score
+ * @returns {boolean}
+ */
+export const canDrawSkillCard = (score: number) => {
+  const normalizedScore = (score + 100) / 200;
+  const random = Math.random();
+  return random < 1 - normalizedScore;
+};
