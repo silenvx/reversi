@@ -12,9 +12,9 @@ type BoardContainerProps = {
 export function BoardContainer({ reversiGame }: BoardContainerProps) {
   const { drawCardForPlayer } = useHandContext();
   const handleClick = (row: number, col: number) => {
-    const result = reversiGame.makeMove(row, col);
+    const isSuccessMake = reversiGame.makeMove(row, col);
     // TODO : 優勢度は仮置き
-    if (result && canDrawSkillCard(-80)) {
+    if (isSuccessMake && canDrawSkillCard(-80)) {
       drawCardForPlayer(reversiGame.currentPlayer, -80);
     }
   };
