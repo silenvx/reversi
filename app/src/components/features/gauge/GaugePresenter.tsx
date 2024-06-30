@@ -1,9 +1,19 @@
 import { PlayerBoradEvaluation } from "@/domains/reversi/const";
 
+// スコア差をもとにグラデーションのクラスを決定する
 const gaugeClass = (value: PlayerBoradEvaluation) => {
   const { black: blackScore, white: whiteScore } = value;
 
-  return `from-${10}% via-${50}% to-${60}%`;
+  // 黒と白のスコア差を計算
+  const scoreDifference = blackScore - whiteScore;
+
+  // スコア差を-50から50の範囲に正規化
+  const normalizedDifference = Math.max(-50, Math.min(50, scoreDifference));
+
+  // グラデーションの基点を計算
+  const fromPercentage = 50 - normalizedDifference;
+
+  return `from-${fromPercentage}%`;
 };
 
 type GaugePresenterProps = {
