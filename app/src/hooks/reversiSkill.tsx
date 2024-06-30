@@ -7,7 +7,7 @@ import React, {
   useMemo,
 } from "react";
 
-import { DiscType, Disc } from "@/domains/reversi/const";
+import { DiscType, Disc, SkillStateType } from "@/domains/reversi/const";
 
 type SkillState = {
   [user: Exclude<DiscType, undefined>]: {
@@ -17,7 +17,10 @@ type SkillState = {
 
 export type SkillContextType = {
   skills: SkillState;
-  toggleSkill: (user: Exclude<DiscType, undefined>, skillName: string) => void;
+  toggleSkill: (
+    user: Exclude<DiscType, undefined>,
+    skillName: SkillStateType,
+  ) => void;
 };
 
 const SkillContext = createContext<SkillContextType>({

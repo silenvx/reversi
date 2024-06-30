@@ -14,3 +14,9 @@ export const Winner = {
   undefined,
 };
 export type WinnerType = (typeof Winner)[keyof typeof Winner];
+
+export const SkillState = {
+  Highlight: "highlight",
+};
+
+export type SkillStateType = (typeof SkillState)[keyof typeof SkillState];

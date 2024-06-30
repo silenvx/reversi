@@ -1,8 +1,16 @@
-import { Disc, DiscType } from "@/domains/reversi/const";
+import { Disc, DiscType, SkillState } from "@/domains/reversi/const";
+import { SkillID, SkillIDType } from "@/domains/reversi/skillcard";
 import { HandContextType } from "@/hooks/handContext";
 import { ReversiGameType } from "@/hooks/reversiGame";
 import { SkillContextType } from "@/hooks/reversiSkill";
 
+/**
+ * 相手の手札を1枚捨てる
+ *
+ * @param {ReversiGameType} game
+ * @param {HandContextType} hand 手札のコンテキスト
+ * @returns {boolean} 成功したかどうか
+ */
 const discardOpponentCard = (
   game: ReversiGameType,
   hand: HandContextType,
@@ -20,12 +28,24 @@ const discardOpponentCard = (
   return true;
 };
 
+/**
+ * ゲームをリセットする
+ *
+ * @param {ReversiGameType} game
+ * @returns {boolean} 成功したかどうか
+ */
 const reset = (game: ReversiGameType): boolean => {
   game.reset();
   return true;
 };
 
-const makeRamdom = (game: ReversiGameType): boolean => {
+/**
+ * ランダムな場所に石を置く
+ *
+ * @param {ReversiGameType} game
+ * @returns {boolean} 成功したかどうか
+ */
+const makeRandom = (game: ReversiGameType): boolean => {
   let row = 0;
   let col = 0;
   do {
@@ -38,6 +58,13 @@ const makeRamdom = (game: ReversiGameType): boolean => {
 
 const timeLeap = (game: ReversiGameType): boolean => game.revertMove(2);
 
+/**
+ * 相手の手札を1枚奪う
+ *
+ * @param {ReversiGameType} game
+ * @param {HandContextType} hand 手札のコンテキスト
+ * @returns {boolean} 成功したかどうか
+ */
 const stealSkillCard = (
   game: ReversiGameType,
   hand: HandContextType,
@@ -57,31 +84,41 @@ const stealSkillCard = (
 const lightup = (game: ReversiGameType, skills: SkillContextType): boolean => {
   skills.toggleSkill(
     game.currentPlayer as Exclude<DiscType, undefined>,
-    "highlight",
+    SkillState.Highlight,
   );
   return true;
 };
 
 // create key-value pair of skill id and its executor function
 
+/**
+ * スキルIDに対応するスキルカードの効果を実行する
+ *
+ * @export
+ * @param {SkillIDType} skillId
+ * @param {ReversiGameType} game
+ * @param {HandContextType} handContext
+ * @param {SkillContextType} skills
+ * @returns {boolean}
+ */
 export function ExecuteSkillCard(
-  skillId: string,
+  skillId: SkillIDType,
   game: ReversiGameType,
   handContext: HandContextType,
   skills: SkillContextType,
 ): boolean {
   switch (skillId) {
-    case "discardOpponentCard":
+    case SkillID.discardOpponentCard:
       return discardOpponentCard(game, handContext);
-    case "Reset":
+    case SkillID.Reset:
       return reset(game);
-    case "makeRamdom":
-      return makeRamdom(game);
-    case "timeLeap":
+    case SkillID.makeRandom:
+      return makeRandom(game);
+    case SkillID.timeLeap:
       return timeLeap(game);
-    case "stealOpponentCard":
+    case SkillID.stealOpponentCard:
       return stealSkillCard(game, handContext);
-    case "lightup":
+    case SkillID.lightup:
       return lightup(game, skills);
     default:
       return false;
