@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import { Debug } from "@/components/pages/Debug";
 import { Home } from "@/components/pages/Home";
 import { Top } from "@/components/pages/Top";
 import { appURL } from "@/config/url";
@@ -13,6 +14,7 @@ function App() {
         {/* pathのURLにアクセスするとelementのコンポーネントを呼び出す */}
         <Route path={appURL.top} element={<Top />} />
         <Route path={appURL.home} element={<Home />} />
+        <Route path={appURL.debug} element={<Debug />} />
       </Routes>
     </BrowserRouter>
   );

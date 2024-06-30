@@ -16,7 +16,7 @@ export function Home() {
   };
 
   return (
-    <div className="bg-black flex items-center justify-center h-screen">
+    <div className="flex h-screen items-center justify-center bg-black">
       <div className="text-center">
         <h1 className="text-6xl" style={neonText}>
           ド派手アクション
@@ -36,3 +36,5 @@ export function Home() {
     </div>
   );
 }
+
+export default Home;

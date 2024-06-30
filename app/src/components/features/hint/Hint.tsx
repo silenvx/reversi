@@ -1,10 +1,8 @@
-import { ReversiGameType } from "@/hooks/reversiGame";
-
-type GamePresenterProps = {
-  reversiGame: ReversiGameType;
-};
-
-export function Hint({ reversiGame }: GamePresenterProps) {
+export function Hint({
+  handleClickCloseHint,
+}: {
+  handleClickCloseHint: () => void;
+}) {
   const neonText = {
     color: "#FFFFFF",
     textShadow:
@@ -20,17 +18,22 @@ export function Hint({ reversiGame }: GamePresenterProps) {
   };
 
   return (
-    <div className="hint-container">
-      <div className="hint-box border">
-        <h1 className="hint-title">ヒント</h1>
-        <p>各スキルカードの効果は以下のとおりです。</p>
-        <ul className="hint-list">
-          <li>リバース：1手前に</li>
-          <li>ランダム：相手のターンにランダムにコマを置く</li>
+    <div className="hint-container fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div
+        className="hint-box rounded border bg-black p-4 shadow-lg"
+        style={neonText}
+      >
+        <h1 className="hint-title mb-4 text-xl" style={neonText}>
+          ヒント
+        </h1>
+        <p style={neonText}>各スキルカードの効果は以下のとおりです。</p>
+        <ul className="hint-list my-4 list-disc pl-5">
+          <li style={neonText}>リバース：1手前に</li>
+          <li style={neonText}>ランダム：相手のターンにランダムにコマを置く</li>
         </ul>
         <button
-          className="hint-close-button"
-          onClick={reversiGame.hint}
+          className="hint-close-button rounded p-2"
+          onClick={handleClickCloseHint}
           style={neonButton}
           type="button"
         >

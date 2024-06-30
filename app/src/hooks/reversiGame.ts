@@ -17,9 +17,11 @@ export type ReversiGameType = {
   winner: WinnerType;
   makeMove: (row: number, col: number) => boolean;
   checkMakeable: (row: number, col: number) => boolean;
+  getScore: (disc: DiscType) => number;
   reset: () => void;
   hint: () => void;
   isVisible: boolean;
+  revertMove: (count?: number) => boolean;
 };
 
 /**
@@ -42,6 +44,9 @@ export const useReversiGame = (): ReversiGameType => {
   const [currentPlayer, setCurrentPlayer] = useState<DiscType>(Disc.black);
   const [winner, setWinner] = useState<WinnerType | undefined>(undefined);
   const [passCount, setPassCount] = useState(0);
+  const [boradHistory, setBoardHistory] = useState<DiscType[][][]>([
+    initialBoard,
+  ]);
 
   /**
    * 石を置く
@@ -63,9 +68,25 @@ export const useReversiGame = (): ReversiGameType => {
     ) {
       return false;
     }
+    setBoardHistory([...boradHistory, board]);
     const newBoard = reverse({ board, row, col, currentPlayer });
     setBoard(newBoard);
     setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
+    return true;
+  };
+
+  const revertMove = (count: number = 1): boolean => {
+    if (boradHistory.length <= count) {
+      return false;
+    }
+    const newBoard = boradHistory.slice(0, -count);
+    setBoard(newBoard[newBoard.length - 1]);
+    setBoardHistory(newBoard);
+    if (count % 2 === 1) {
+      setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
+    } else {
+      setCurrentPlayer(currentPlayer);
+    }
     return true;
   };
 
@@ -74,6 +95,7 @@ export const useReversiGame = (): ReversiGameType => {
    */
   const reset = () => {
     setBoard(initialBoard);
+    setBoardHistory([initialBoard]);
     setCurrentPlayer(Disc.black);
     setWinner(undefined);
     setPassCount(0);
@@ -123,14 +145,24 @@ export const useReversiGame = (): ReversiGameType => {
     setIsVisible(!isVisible);
   };
 
+  const getScore = (disc: DiscType) => {
+    const [blackCount, whiteCount] = discCount(board);
+    if (disc === Disc.black) {
+      return blackCount;
+    }
+    return whiteCount;
+  };
+
   return {
     board,
     currentPlayer,
     winner,
     makeMove,
     checkMakeable: checkMakeableWrapper,
+    getScore,
     reset,
     hint,
     isVisible,
+    revertMove,
   };
 };
