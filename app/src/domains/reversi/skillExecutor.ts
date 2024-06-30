@@ -1,4 +1,4 @@
-import { DiscType } from "@/domains/reversi/const";
+import { Disc, DiscType } from "@/domains/reversi/const";
 import { HandContextType } from "@/hooks/handContext";
 import { ReversiGameType } from "@/hooks/reversiGame";
 import { SkillContextType } from "@/hooks/reversiSkill";
@@ -8,12 +8,15 @@ const discardOpponentCard = (
   hand: HandContextType,
 ): boolean => {
   const opponentHands =
-    game.currentPlayer === "black" ? hand.whiteHands : hand.blackHands;
+    game.currentPlayer === Disc.black ? hand.whiteHands : hand.blackHands;
   if (opponentHands.length === 0) {
     return false;
   }
   const card = opponentHands[Math.floor(Math.random() * opponentHands.length)];
-  hand.discardCard(game.currentPlayer === "black" ? "white" : "black", card.id);
+  hand.discardCard(
+    game.currentPlayer === Disc.black ? Disc.white : Disc.black,
+    card.id,
+  );
   return true;
 };
 
@@ -40,12 +43,12 @@ const stealSkillCard = (
   hand: HandContextType,
 ): boolean => {
   const opponentHands =
-    game.currentPlayer === "black" ? hand.whiteHands : hand.blackHands;
+    game.currentPlayer === Disc.black ? hand.whiteHands : hand.blackHands;
   if (opponentHands.length === 0) {
     return false;
   }
   const card = opponentHands[Math.floor(Math.random() * opponentHands.length)];
-  const oppeonent = game.currentPlayer === "black" ? "white" : "black";
+  const oppeonent = game.currentPlayer === Disc.black ? Disc.white : Disc.black;
   hand.discardCard(oppeonent, card.id);
   hand.addCard(game.currentPlayer, card);
   return true;
