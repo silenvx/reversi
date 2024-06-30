@@ -11,9 +11,11 @@ const gaugeClass = (value: PlayerBoradEvaluation) => {
   const normalizedDifference = Math.max(-50, Math.min(50, scoreDifference));
 
   // グラデーションの基点を計算
-  const fromPercentage = 50 - normalizedDifference;
+  const viaPercentage = 50 + normalizedDifference;
+  const fromPercentage = Math.max(0, viaPercentage - 5);
+  const toPercentage = Math.min(100, viaPercentage + 5);
 
-  return `from-${fromPercentage}%`;
+  return `from-${fromPercentage}% via-${viaPercentage}% to-${toPercentage}%`;
 };
 
 type GaugePresenterProps = {
@@ -24,7 +26,7 @@ export function GaugePresenter({ value }: GaugePresenterProps) {
   // 縦のバーを表示する
   return (
     <div
-      className={`h-96 w-6 rounded-full bg-gradient-to-b from-red-500 via-purple-500 to-blue-500 transition-all duration-500 ${gaugeClass(value)}`}
+      className={`h-96 w-6 rounded-full bg-gradient-to-b from-red-500 via-purple-500 to-blue-500 ${gaugeClass(value)}`}
     />
   );
 }
