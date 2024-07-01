@@ -1,18 +1,25 @@
-const gaugeClass = (value: number) => {
-  let validValue = value;
-  if (value < 0) validValue = 0;
-  if (value > 100) validValue = 100;
+import { PlayerBoradEvaluation } from "@/domains/reversi/const";
 
-  // TODO: きれいに表示できる数式を考える
-  const fromPercentage = validValue;
-  const viaPercentage = validValue;
-  const toPercentage = validValue;
+// スコア差をもとにグラデーションのクラスを決定する
+const gaugeClass = (value: PlayerBoradEvaluation) => {
+  const { black: blackScore, white: whiteScore } = value;
+
+  // 黒と白のスコア差を計算
+  const scoreDifference = blackScore - whiteScore;
+
+  // スコア差を-50から50の範囲に正規化
+  const normalizedDifference = Math.max(-50, Math.min(50, scoreDifference));
+
+  // グラデーションの基点を計算
+  const viaPercentage = 50 + normalizedDifference;
+  const fromPercentage = Math.max(0, viaPercentage - 5);
+  const toPercentage = Math.min(100, viaPercentage + 5);
 
   return `from-${fromPercentage}% via-${viaPercentage}% to-${toPercentage}%`;
 };
 
 type GaugePresenterProps = {
-  value: number;
+  value: PlayerBoradEvaluation;
 };
 
 export function GaugePresenter({ value }: GaugePresenterProps) {
