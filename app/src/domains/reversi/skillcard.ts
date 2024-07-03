@@ -18,11 +18,11 @@
  */
 export const SkillID = {
   discardOpponentCard: "discardOpponentCard",
-  Reset: "Reset",
+  reset: "reset",
   makeRandom: "makeRandom",
   timeLeap: "timeLeap",
   stealOpponentCard: "stealOpponentCard",
-  lightup: "lightup",
+  lightup: "lightUp",
 };
 
 /**
@@ -52,7 +52,7 @@ export const defaultSkillCards: SkillCard[] = [
   {
     name: "リセット",
     description: "ゲームをリセットする",
-    id: SkillID.Reset,
+    id: SkillID.reset,
     effect: 1,
   },
   {

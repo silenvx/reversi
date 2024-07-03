@@ -81,10 +81,10 @@ const stealSkillCard = (
   return true;
 };
 
-const lightup = (game: ReversiGameType, skills: SkillContextType): boolean => {
+const lightUp = (game: ReversiGameType, skills: SkillContextType): boolean => {
   skills.toggleSkill(
     game.currentPlayer as Exclude<DiscType, undefined>,
-    SkillState.Highlight,
+    SkillState.highLight,
   );
   return true;
 };
@@ -110,7 +110,7 @@ export function ExecuteSkillCard(
   switch (skillId) {
     case SkillID.discardOpponentCard:
       return discardOpponentCard(game, handContext);
-    case SkillID.Reset:
+    case SkillID.reset:
       return reset(game);
     case SkillID.makeRandom:
       return makeRandom(game);
@@ -119,7 +119,7 @@ export function ExecuteSkillCard(
     case SkillID.stealOpponentCard:
       return stealSkillCard(game, handContext);
     case SkillID.lightup:
-      return lightup(game, skills);
+      return lightUp(game, skills);
     default:
       return false;
   }
