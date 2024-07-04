@@ -4,6 +4,7 @@ export const Disc = {
   white: "white", // 青
   empty: undefined,
 };
+
 export type DiscType = (typeof Disc)[keyof typeof Disc];
 
 // 勝ち負けの定数
@@ -27,13 +28,19 @@ export const weightedBoard: number[][] = [
   [30, -12, 0, -1, -1, 0, -12, 30],
 ];
 
-//
-
 export type MoveScore = {
   row: number;
   col: number;
   score: number;
 };
+
+export type PlayerBoardEvaluation = Omit<
+  {
+    [Key in keyof typeof Disc]: number;
+  },
+  "empty"
+>;
+
 export const SkillState = {
   highLight: "highLight",
 };

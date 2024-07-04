@@ -21,7 +21,7 @@ export function GamePresenter({ reversiGame }: GamePresenterProps) {
           <MenuContainer reversiGame={reversiGame} />
           <BoardContainer reversiGame={reversiGame} />
           {/* TODO: GaugeContainerのvalueは仮の値 */}
-          <GaugeContainer value={50} />
+          <GaugeContainer value={reversiGame.boardEvaluatedScore} />
         </div>
         <PlayerInformationContainer
           reversiGame={reversiGame}

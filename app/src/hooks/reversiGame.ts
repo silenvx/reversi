@@ -15,8 +15,9 @@ import {
   Winner,
   WinnerType,
   MoveScore,
+  PlayerBoardEvaluation,
 } from "@/domains/reversi/const";
-import { calculateMoveScores } from "@/domains/reversi/evaluate";
+import { evaluateBoard, calculateMoveScores } from "@/domains/reversi/evaluate";
 
 export type ReversiGameType = {
   board: DiscType[][];
@@ -28,6 +29,7 @@ export type ReversiGameType = {
   reset: () => void;
   revertMove: (count?: number) => boolean;
   moveScores: Array<MoveScore>;
+  boardEvaluatedScore: PlayerBoardEvaluation;
 };
 
 /**
@@ -54,6 +56,11 @@ export const useReversiGame = (): ReversiGameType => {
     initialBoard,
   ]);
   const [moveScores, setMoveScores] = useState<Array<MoveScore>>([]);
+  const [boardEvaluatedScore, setBoardEvaluatedScore] =
+    useState<PlayerBoardEvaluation>({
+      black: 0,
+      white: 0,
+    });
 
   /**
    * 石を置く
@@ -149,16 +156,24 @@ export const useReversiGame = (): ReversiGameType => {
   };
 
   // board と currentPlayer が変更されない限り同じ関数を返すメモ化された calculateMoveScores 関数
-  const memorizedCalculateMoceScores = useCallback(
+  const memorizedCalculateMoveScores = useCallback(
     () => calculateMoveScores(board, currentPlayer),
     [board, currentPlayer],
   );
 
   // メモ化された関数が変更されたときに新たな盤面スコアがセットされる
   useEffect(() => {
-    const scores = memorizedCalculateMoceScores();
+    const scores = memorizedCalculateMoveScores();
     setMoveScores(scores);
-  }, [memorizedCalculateMoceScores]);
+  }, [memorizedCalculateMoveScores]);
+
+  // 盤面が変化した際に、評価値をセットする
+  useEffect(() => {
+    setBoardEvaluatedScore({
+      white: evaluateBoard(board, Disc.white),
+      black: evaluateBoard(board, Disc.black),
+    });
+  }, [currentPlayer]);
 
   return {
     board,
@@ -170,5 +185,6 @@ export const useReversiGame = (): ReversiGameType => {
     reset,
     revertMove,
     moveScores,
+    boardEvaluatedScore,
   };
 };
