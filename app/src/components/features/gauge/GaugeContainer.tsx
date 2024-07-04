@@ -1,8 +1,8 @@
 import { GaugePresenter } from "@/components/features/gauge/GaugePresenter";
-import { PlayerBoradEvaluation } from "@/domains/reversi/const";
+import { PlayerBoardEvaluation } from "@/domains/reversi/const";
 
 type GaugeContainerProps = {
-  value: PlayerBoradEvaluation;
+  value: PlayerBoardEvaluation;
 };
 
 export function GaugeContainer({ value }: GaugeContainerProps) {

@@ -34,7 +34,7 @@ export type MoveScore = {
   score: number;
 };
 
-export type PlayerBoradEvaluation = Omit<
+export type PlayerBoardEvaluation = Omit<
   {
     [Key in keyof typeof Disc]: number;
   },

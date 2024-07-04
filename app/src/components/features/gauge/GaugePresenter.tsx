@@ -1,7 +1,7 @@
-import { PlayerBoradEvaluation } from "@/domains/reversi/const";
+import { PlayerBoardEvaluation } from "@/domains/reversi/const";
 
 // スコア差をもとにグラデーションのクラスを決定する
-const gaugeClass = (value: PlayerBoradEvaluation) => {
+const gaugeClass = (value: PlayerBoardEvaluation) => {
   const { black: blackScore, white: whiteScore } = value;
 
   // 黒と白のスコア差を計算
@@ -19,7 +19,7 @@ const gaugeClass = (value: PlayerBoradEvaluation) => {
 };
 
 type GaugePresenterProps = {
-  value: PlayerBoradEvaluation;
+  value: PlayerBoardEvaluation;
 };
 
 export function GaugePresenter({ value }: GaugePresenterProps) {
