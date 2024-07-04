@@ -172,8 +172,8 @@ export const useReversiGame = (): ReversiGameType => {
   // 盤面が変化した際に、評価値をセットする
   useEffect(() => {
     setBoardEvaluatedScore({
-      white: evaluateBoard(board, "white"),
-      black: evaluateBoard(board, "black"),
+      white: evaluateBoard(board, Disc.white),
+      black: evaluateBoard(board, Disc.black),
     });
   }, [currentPlayer]);
 
