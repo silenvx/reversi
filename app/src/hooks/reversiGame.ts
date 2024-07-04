@@ -52,7 +52,7 @@ export const useReversiGame = (): ReversiGameType => {
   const [currentPlayer, setCurrentPlayer] = useState<DiscType>(Disc.black);
   const [winner, setWinner] = useState<WinnerType | undefined>(undefined);
   const [passCount, setPassCount] = useState(0);
-  const [boradHistory, setBoardHistory] = useState<DiscType[][][]>([
+  const [boardHistory, setBoardHistory] = useState<DiscType[][][]>([
     initialBoard,
   ]);
   const [moveScores, setMoveScores] = useState<Array<MoveScore>>([]);
@@ -82,7 +82,7 @@ export const useReversiGame = (): ReversiGameType => {
     ) {
       return false;
     }
-    setBoardHistory([...boradHistory, board]);
+    setBoardHistory([...boardHistory, board]);
     const newBoard = reverse({ board, row, col, currentPlayer });
     setBoard(newBoard);
     setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
@@ -90,16 +90,14 @@ export const useReversiGame = (): ReversiGameType => {
   };
 
   const revertMove = (count: number = 1): boolean => {
-    if (boradHistory.length <= count) {
+    if (boardHistory.length <= count) {
       return false;
     }
-    const newBoard = boradHistory.slice(0, -count);
+    const newBoard = boardHistory.slice(0, -count);
     setBoard(newBoard[newBoard.length - 1]);
     setBoardHistory(newBoard);
     if (count % 2 === 1) {
       setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
-    } else {
-      setCurrentPlayer(currentPlayer);
     }
     return true;
   };

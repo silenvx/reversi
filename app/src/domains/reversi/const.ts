@@ -40,3 +40,9 @@ export type PlayerBoardEvaluation = Omit<
   },
   "empty"
 >;
+
+export const SkillState = {
+  highLight: "highLight",
+};
+
+export type SkillStateType = (typeof SkillState)[keyof typeof SkillState];

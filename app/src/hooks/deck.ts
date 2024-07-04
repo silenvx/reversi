@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
 
-import { SkillCard, createInitialSkillCard } from "@/domains/reversi/skillcard";
+import { SkillCard, defaultSkillCards } from "@/domains/reversi/skillcard";
 
 // スキルの実装はいったん適当
-const cardlist: SkillCard[] = createInitialSkillCard();
+const cardlist: SkillCard[] = defaultSkillCards;
 /**
  * 山札のカスタムフック
  * @param cards 山札のカード
