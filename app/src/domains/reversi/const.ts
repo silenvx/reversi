@@ -34,3 +34,8 @@ export type MoveScore = {
   col: number;
   score: number;
 };
+export const SkillState = {
+  highLight: "highLight",
+};
+
+export type SkillStateType = (typeof SkillState)[keyof typeof SkillState];
