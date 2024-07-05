@@ -41,7 +41,6 @@ export function MenuModal({ children, handleClickClose }: MenuModalProps) {
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         onClick={(e) => e.stopPropagation()}
-        className="flex h-auto max-h-screen w-full cursor-default flex-col gap-5 rounded-md bg-white p-10 shadow-md"
       >
         {children}
       </div>

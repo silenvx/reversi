@@ -1,8 +1,10 @@
-export function Hint({
-  handleClickCloseHint,
-}: {
-  handleClickCloseHint: () => void;
-}) {
+import { MenuModal } from "@/components/features/menu/MenuModal";
+
+type HintPresenterProps = {
+  handleClickClose: () => void;
+};
+
+export function HintPresenter({ handleClickClose }: HintPresenterProps) {
   const neonText = {
     color: "#FFFFFF",
     textShadow:
@@ -18,7 +20,7 @@ export function Hint({
   };
 
   return (
-    <div className="hint-container fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <MenuModal handleClickClose={handleClickClose}>
       <div
         className="hint-box rounded border bg-black p-4 shadow-lg"
         style={neonText}
@@ -33,13 +35,13 @@ export function Hint({
         </ul>
         <button
           className="hint-close-button rounded p-2"
-          onClick={handleClickCloseHint}
+          onClick={handleClickClose}
           style={neonButton}
           type="button"
         >
           <p style={neonText}>×</p>
         </button>
       </div>
-    </div>
+    </MenuModal>
   );
 }

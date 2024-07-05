@@ -4,7 +4,7 @@ import { LiaQuestionSolid } from "react-icons/lia";
 import { TfiReload } from "react-icons/tfi";
 
 import SkillToggleButton from "@/components/features/board/ui/skillToggle";
-import { Hint } from "@/components/features/hint/Hint";
+import { HintPresenter } from "@/components/features/hint/HintPresenter";
 import { MenuModal } from "@/components/features/menu/MenuModal";
 import { Disc } from "@/domains/reversi/const";
 import { ReversiGameType } from "@/hooks/reversiGame";
@@ -42,18 +42,22 @@ export function MenuPresenter({
       </div>
       {modalOpenSetting && (
         <MenuModal handleClickClose={handleClickClose}>
-          <button
-            className="rounded border border-black p-2"
-            type="button"
-            onClick={reversiGame.reset}
-          >
-            Reset
-          </button>
-          <SkillToggleButton user={Disc.white} skillName="highlight" />
-          <SkillToggleButton user={Disc.black} skillName="highlight" />
+          <div className="flex h-auto max-h-screen w-full cursor-default flex-col gap-5 rounded-md bg-white p-10 shadow-md">
+            <button
+              className="rounded border border-black p-2"
+              type="button"
+              onClick={reversiGame.reset}
+            >
+              Reset
+            </button>
+            <SkillToggleButton user={Disc.white} skillName="highlight" />
+            <SkillToggleButton user={Disc.black} skillName="highlight" />
+          </div>
         </MenuModal>
       )}
-      {modalOpenHint && <Hint handleClickCloseHint={handleClickCloseHint} />}
+      {modalOpenHint && (
+        <HintPresenter handleClickClose={handleClickCloseHint} />
+      )}
     </>
   );
 }
