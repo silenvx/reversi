@@ -1,25 +1,29 @@
-const gaugeClass = (value: number) => {
-  let validValue = value;
-  if (value < 0) validValue = 0;
-  if (value > 100) validValue = 100;
+import { PlayerBoardEvaluation } from "@/domains/reversi/const";
 
-  // TODO: きれいに表示できる数式を考える
-  const fromPercentage = validValue;
-  const viaPercentage = validValue;
-  const toPercentage = validValue;
+// スコア差をもとにグラデーションのクラスを決定する
+const gaugeStyle = (value: PlayerBoardEvaluation) => {
+  const { black: blackScore, white: whiteScore } = value;
 
-  return `from-${fromPercentage}% via-${viaPercentage}% to-${toPercentage}%`;
+  // 黒と白のスコア差を計算
+  const scoreDifference = blackScore - whiteScore;
+
+  // スコア差を-50から50の範囲に正規化
+  const normalizedDifference = Math.max(-50, Math.min(50, scoreDifference));
+
+  // グラデーションの基点を計算
+  const viaPercentage = 100 - (50 + normalizedDifference);
+
+  return {
+    background: `linear-gradient(to bottom, #ef4444 0%, #a855f7 ${viaPercentage}%, #3b82f6 100%)`,
+  };
 };
 
 type GaugePresenterProps = {
-  value: number;
+  value: PlayerBoardEvaluation;
 };
 
 export function GaugePresenter({ value }: GaugePresenterProps) {
   // 縦のバーを表示する
-  return (
-    <div
-      className={`h-96 w-6 rounded-full bg-gradient-to-b from-red-500 via-purple-500 to-blue-500 ${gaugeClass(value)}`}
-    />
-  );
+  // tailwindの計算が動的にはうまく動かないのでstyleを直接指定
+  return <div className="h-96 w-6 rounded-full" style={gaugeStyle(value)} />;
 }

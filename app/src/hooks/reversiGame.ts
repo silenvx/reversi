@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { configReversi } from "@/config/reversi";
 import {
@@ -9,7 +9,15 @@ import {
   discCount,
   reverse,
 } from "@/domains/reversi/compute";
-import { DiscType, Disc, Winner, WinnerType } from "@/domains/reversi/const";
+import {
+  DiscType,
+  Disc,
+  Winner,
+  WinnerType,
+  MoveScore,
+  PlayerBoardEvaluation,
+} from "@/domains/reversi/const";
+import { evaluateBoard, calculateMoveScores } from "@/domains/reversi/evaluate";
 
 export type ReversiGameType = {
   board: DiscType[][];
@@ -22,6 +30,8 @@ export type ReversiGameType = {
   hint: () => void;
   isVisible: boolean;
   revertMove: (count?: number) => boolean;
+  moveScores: Array<MoveScore>;
+  boardEvaluatedScore: PlayerBoardEvaluation;
 };
 
 /**
@@ -44,9 +54,15 @@ export const useReversiGame = (): ReversiGameType => {
   const [currentPlayer, setCurrentPlayer] = useState<DiscType>(Disc.black);
   const [winner, setWinner] = useState<WinnerType | undefined>(undefined);
   const [passCount, setPassCount] = useState(0);
-  const [boradHistory, setBoardHistory] = useState<DiscType[][][]>([
+  const [boardHistory, setBoardHistory] = useState<DiscType[][][]>([
     initialBoard,
   ]);
+  const [moveScores, setMoveScores] = useState<Array<MoveScore>>([]);
+  const [boardEvaluatedScore, setBoardEvaluatedScore] =
+    useState<PlayerBoardEvaluation>({
+      black: 0,
+      white: 0,
+    });
 
   /**
    * 石を置く
@@ -68,7 +84,7 @@ export const useReversiGame = (): ReversiGameType => {
     ) {
       return false;
     }
-    setBoardHistory([...boradHistory, board]);
+    setBoardHistory([...boardHistory, board]);
     const newBoard = reverse({ board, row, col, currentPlayer });
     setBoard(newBoard);
     setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
@@ -76,16 +92,14 @@ export const useReversiGame = (): ReversiGameType => {
   };
 
   const revertMove = (count: number = 1): boolean => {
-    if (boradHistory.length <= count) {
+    if (boardHistory.length <= count) {
       return false;
     }
-    const newBoard = boradHistory.slice(0, -count);
+    const newBoard = boardHistory.slice(0, -count);
     setBoard(newBoard[newBoard.length - 1]);
     setBoardHistory(newBoard);
     if (count % 2 === 1) {
       setCurrentPlayer(currentPlayer === Disc.black ? Disc.white : Disc.black);
-    } else {
-      setCurrentPlayer(currentPlayer);
     }
     return true;
   };
@@ -153,6 +167,26 @@ export const useReversiGame = (): ReversiGameType => {
     return whiteCount;
   };
 
+  // board と currentPlayer が変更されない限り同じ関数を返すメモ化された calculateMoveScores 関数
+  const memorizedCalculateMoveScores = useCallback(
+    () => calculateMoveScores(board, currentPlayer),
+    [board, currentPlayer],
+  );
+
+  // メモ化された関数が変更されたときに新たな盤面スコアがセットされる
+  useEffect(() => {
+    const scores = memorizedCalculateMoveScores();
+    setMoveScores(scores);
+  }, [memorizedCalculateMoveScores]);
+
+  // 盤面が変化した際に、評価値をセットする
+  useEffect(() => {
+    setBoardEvaluatedScore({
+      white: evaluateBoard(board, Disc.white),
+      black: evaluateBoard(board, Disc.black),
+    });
+  }, [currentPlayer]);
+
   return {
     board,
     currentPlayer,
@@ -164,5 +198,7 @@ export const useReversiGame = (): ReversiGameType => {
     hint,
     isVisible,
     revertMove,
+    moveScores,
+    boardEvaluatedScore,
   };
 };
