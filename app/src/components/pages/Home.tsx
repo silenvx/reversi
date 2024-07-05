@@ -1,6 +1,14 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import { appURL } from "@/config/url";
 
 export function Home() {
+  const navigate = useNavigate();
+
+  const handleClickGameStart = () => {
+    navigate(appURL.top);
+  };
+
   const neonText = {
     color: "#FFFFFF",
     textShadow:
@@ -23,15 +31,14 @@ export function Home() {
           <br />
           リバシニア
         </h1>
-        <Link to="/reversi">
-          <button
-            className="mt-20 text-2xl text-orange-400"
-            style={neonButton}
-            type="button"
-          >
-            START
-          </button>
-        </Link>
+        <button
+          className="mt-20 text-2xl text-orange-400"
+          style={neonButton}
+          type="button"
+          onClick={handleClickGameStart}
+        >
+          START
+        </button>
       </div>
     </div>
   );
