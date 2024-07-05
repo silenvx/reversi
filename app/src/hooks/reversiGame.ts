@@ -27,6 +27,8 @@ export type ReversiGameType = {
   checkMakeable: (row: number, col: number) => boolean;
   getScore: (disc: DiscType) => number;
   reset: () => void;
+  hint: () => void;
+  isVisible: boolean;
   revertMove: (count?: number) => boolean;
   moveScores: Array<MoveScore>;
   boardEvaluatedScore: PlayerBoardEvaluation;
@@ -146,6 +148,16 @@ export const useReversiGame = (): ReversiGameType => {
       col,
       currentPlayer,
     });
+  /*
+  ヒント画面の表示を制御するためのフック
+   */
+  // useStateフックを使って、要素の可視性を制御
+  const [isVisible, setIsVisible] = useState(false);
+
+  // ボタンがクリックされたときに呼び出される関数
+  const hint = () => {
+    setIsVisible(!isVisible);
+  };
 
   const getScore = (disc: DiscType) => {
     const [blackCount, whiteCount] = discCount(board);
@@ -183,6 +195,8 @@ export const useReversiGame = (): ReversiGameType => {
     checkMakeable: checkMakeableWrapper,
     getScore,
     reset,
+    hint,
+    isVisible,
     revertMove,
     moveScores,
     boardEvaluatedScore,
