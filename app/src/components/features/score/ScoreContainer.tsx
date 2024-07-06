@@ -9,6 +9,10 @@ type ScoreContainerProps = {
 
 export function ScoreContainer({ reversiGame, player }: ScoreContainerProps) {
   return (
-    <ScorePresenter score={reversiGame.getScore(player)} player={player} />
+    <ScorePresenter
+      score={reversiGame.getScore(player)}
+      player={player}
+      isPlaying={reversiGame.currentPlayer === player}
+    />
   );
 }
