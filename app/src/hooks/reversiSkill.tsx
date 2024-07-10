@@ -11,7 +11,7 @@ import { DiscType, Disc, SkillStateType } from "@/domains/reversi/const";
 
 type SkillState = {
   [user: Exclude<DiscType, undefined>]: {
-    [skillName: string]: boolean;
+    [skillName: SkillStateType]: boolean;
   };
 };
 
@@ -35,7 +35,7 @@ export function SkillProvider({ children }: { children: ReactNode }) {
   });
 
   const toggleSkill = useCallback(
-    (user: Exclude<DiscType, undefined>, skillName: string) => {
+    (user: Exclude<DiscType, undefined>, skillName: SkillStateType) => {
       setSkills((prevSkills) => ({
         ...prevSkills,
         [user]: {
