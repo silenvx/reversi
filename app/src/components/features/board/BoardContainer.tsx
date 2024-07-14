@@ -24,7 +24,7 @@ export function BoardContainer({ reversiGame }: BoardContainerProps) {
       reversiGame={reversiGame}
       isHighlightActive={
         skills[reversiGame.currentPlayer as Exclude<DiscType, undefined>]
-          .highlight
+          .highLight
       }
       handleClick={handleClick}
     />
