@@ -42,5 +42,7 @@ export const useDeck = () => {
     },
     [cards],
   );
-  return { cards, drawCard };
+
+  const resetDeck = () => setCards(cardlist);
+  return { cards, drawCard, resetDeck };
 };

@@ -10,7 +10,7 @@ import { useDeckContext } from "@/hooks/deckContext";
  * @returns {{ blackHands: any; whiteHands: any; drawCardForPlayer: any; playCard: any; }}
  */
 export const useHands = () => {
-  const { drawCard } = useDeckContext();
+  const { drawCard, resetDeck } = useDeckContext();
   const [blackHands, setBlackHands] = useState<SkillCard[]>([]);
   const [whiteHands, setWhiteHands] = useState<SkillCard[]>([]);
 
@@ -56,6 +56,12 @@ export const useHands = () => {
     [blackHands, whiteHands],
   );
 
+  const resetCard = () => {
+    setBlackHands([]);
+    setWhiteHands([]);
+    resetDeck();
+  };
+
   /**
    * ユーザーがカードをプレイする
    * @param {DiscType} player ユーザー
@@ -64,5 +70,12 @@ export const useHands = () => {
    * @type {*}
    */
 
-  return { blackHands, whiteHands, drawCardForPlayer, discardCard, addCard };
+  return {
+    blackHands,
+    whiteHands,
+    drawCardForPlayer,
+    discardCard,
+    addCard,
+    resetCard,
+  };
 };

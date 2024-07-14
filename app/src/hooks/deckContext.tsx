@@ -12,13 +12,17 @@ import { useDeck } from "@/hooks/deck";
 interface DeckContextType {
   deck: SkillCard[];
   drawCard: (adv: number) => SkillCard | null;
+  resetDeck: () => void;
 }
 
 const DeckContext = createContext<DeckContextType | undefined>(undefined);
 
 export function DeckProvider({ children }: { children: ReactNode }) {
-  const { cards, drawCard } = useDeck();
-  const value = useMemo(() => ({ deck: cards, drawCard }), [cards, drawCard]);
+  const { cards, drawCard, resetDeck } = useDeck();
+  const value = useMemo(
+    () => ({ deck: cards, drawCard, resetDeck }),
+    [cards, drawCard],
+  );
   return <DeckContext.Provider value={value}>{children}</DeckContext.Provider>;
 }
 
