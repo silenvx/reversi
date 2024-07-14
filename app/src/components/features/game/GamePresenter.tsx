@@ -13,20 +13,25 @@ export function GamePresenter({ reversiGame }: GamePresenterProps) {
   return (
     <div className="flex h-screen justify-center bg-indigo-950 p-8">
       <div className="flex w-full flex-col justify-between">
-        <PlayerInformationContainer
-          reversiGame={reversiGame}
-          player={Disc.black}
-        />
-        <div className="flex w-full justify-center gap-4">
-          <MenuContainer reversiGame={reversiGame} />
-          <BoardContainer reversiGame={reversiGame} />
-          {/* TODO: GaugeContainerのvalueは仮の値 */}
-          <GaugeContainer value={reversiGame.boardEvaluatedScore} />
+        <div className="h-1/5">
+          <PlayerInformationContainer
+            reversiGame={reversiGame}
+            player={Disc.black}
+          />
         </div>
-        <PlayerInformationContainer
-          reversiGame={reversiGame}
-          player={Disc.white}
-        />
+        <div className="flex h-3/5 w-full">
+          <div className="flex h-full w-full flex-grow justify-center gap-4 p-[5%]">
+            <MenuContainer reversiGame={reversiGame} />
+            <BoardContainer reversiGame={reversiGame} />
+            <GaugeContainer value={reversiGame.boardEvaluatedScore} />
+          </div>
+        </div>
+        <div className="h-1/5">
+          <PlayerInformationContainer
+            reversiGame={reversiGame}
+            player={Disc.white}
+          />
+        </div>
       </div>
     </div>
   );
