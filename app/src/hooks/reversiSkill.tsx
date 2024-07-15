@@ -21,11 +21,13 @@ export type SkillContextType = {
     user: Exclude<DiscType, undefined>,
     skillName: SkillStateType,
   ) => void;
+  resetSkills: () => void;
 };
 
 const SkillContext = createContext<SkillContextType>({
   skills: {},
   toggleSkill: () => {},
+  resetSkills: () => {},
 });
 
 export function SkillProvider({ children }: { children: ReactNode }) {
@@ -46,13 +48,20 @@ export function SkillProvider({ children }: { children: ReactNode }) {
     },
     [],
   );
+
+  const resetSkills = () => {
+    setSkills({
+      [Disc.black]: {},
+      [Disc.white]: {},
+    });
+  };
   return useMemo(
     () => (
-      <SkillContext.Provider value={{ skills, toggleSkill }}>
+      <SkillContext.Provider value={{ skills, toggleSkill, resetSkills }}>
         {children}
       </SkillContext.Provider>
     ),
-    [skills, toggleSkill],
+    [skills, toggleSkill, resetSkills],
   );
 }
 

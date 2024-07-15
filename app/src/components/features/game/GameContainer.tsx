@@ -2,12 +2,10 @@ import { useEffect } from "react";
 
 import { GamePresenter } from "@/components/features/game/GamePresenter";
 import { Winner } from "@/domains/reversi/const";
-import { useHandContext } from "@/hooks/handContext";
 import { useReversiGame } from "@/hooks/reversiGame";
 
 export function GameContainer() {
   const reversiGame = useReversiGame();
-  const { resetCard } = useHandContext();
 
   // 勝者が決まったらアラートを表示してリセット
   useEffect(() => {
@@ -27,8 +25,7 @@ export function GameContainer() {
       default:
         break;
     }
-    reversiGame.reset();
-    resetCard();
+    reversiGame.hardReset();
   }, [reversiGame.winner]);
 
   return <GamePresenter reversiGame={reversiGame} />;
