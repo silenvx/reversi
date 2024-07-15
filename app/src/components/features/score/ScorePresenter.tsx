@@ -19,12 +19,10 @@ export function ScorePresenter({
   isPlaying,
 }: ScoreContainerProps) {
   return (
-    <div>
-      <div
-        className={`mx-auto flex h-52 w-52 items-center justify-center rounded-full border-4 text-5xl shadow-lg backdrop-blur-lg ${colorClass(player, isPlaying)}`}
-      >
-        {score}
-      </div>
+    <div
+      className={`mx-auto flex aspect-square h-full w-auto items-center justify-center rounded-full border-4 text-5xl shadow-lg backdrop-blur-lg ${colorClass(player, isPlaying)}`}
+    >
+      {score}
     </div>
   );
 }
