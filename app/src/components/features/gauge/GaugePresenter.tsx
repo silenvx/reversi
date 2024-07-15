@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
+
 import { PlayerBoardEvaluation } from "@/domains/reversi/const";
 
 // スコア差をもとにグラデーションのクラスを決定する
-const gaugeStyle = (value: PlayerBoardEvaluation) => {
+const gaugeStyle = (value: PlayerBoardEvaluation, isSmallScreen: boolean) => {
   const { black: blackScore, white: whiteScore } = value;
 
   // 黒と白のスコア差を計算
@@ -12,9 +14,10 @@ const gaugeStyle = (value: PlayerBoardEvaluation) => {
 
   // グラデーションの基点を計算
   const viaPercentage = 100 - (50 + normalizedDifference);
+  const gradientDirection = isSmallScreen ? "to left" : "to bottom";
 
   return {
-    background: `linear-gradient(to bottom, #ef4444 0%, #a855f7 ${viaPercentage}%, #3b82f6 100%)`,
+    background: `linear-gradient(${gradientDirection}, #ef4444 0%, #a855f7 ${viaPercentage}%, #3b82f6 100%)`,
   };
 };
 
@@ -23,7 +26,25 @@ type GaugePresenterProps = {
 };
 
 export function GaugePresenter({ value }: GaugePresenterProps) {
+  const [isSmallScreen, setIsSmallScreen] = useState(
+    window.matchMedia("(max-width: 640px)").matches,
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.matchMedia("(max-width: 640px)").matches);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // 縦のバーを表示する
   // tailwindの計算が動的にはうまく動かないのでstyleを直接指定
-  return <div className="h-full w-6 rounded-full" style={gaugeStyle(value)} />;
+  return (
+    <div
+      className="h-6 w-full rounded-full sm:h-full sm:w-6"
+      style={gaugeStyle(value, isSmallScreen)}
+    />
+  );
 }

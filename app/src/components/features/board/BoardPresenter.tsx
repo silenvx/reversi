@@ -13,7 +13,7 @@ export function BoardPresenter({
   handleClick,
 }: BoardPresenterProps) {
   return (
-    <div className="grid aspect-[1/1] h-full grid-cols-8 grid-rows-8">
+    <div className="grid aspect-[1/1] max-h-full max-w-full grid-cols-8 grid-rows-8">
       {reversiGame.board.map((row, i) =>
         row.map((_, j) => (
           <CellPresenter

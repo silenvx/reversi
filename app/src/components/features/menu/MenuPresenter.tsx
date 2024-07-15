@@ -39,9 +39,11 @@ export function MenuPresenter({
 }: MenuPresenterProps) {
   return (
     <>
-      <div className="flex h-full flex-col justify-center gap-2 text-4xl text-orange-400/80">
-        <IoHomeOutline />
-        <button type="button" aria-label="Home" onClick={handleClickHint}>
+      <div className="flex flex-row justify-center gap-2 text-4xl text-orange-400/80 sm:h-full sm:flex-col">
+        <button type="button" aria-label="Home" onClick={() => {}}>
+          <IoHomeOutline />
+        </button>
+        <button type="button" aria-label="Hint" onClick={handleClickHint}>
           <LiaQuestionSolid />
         </button>
         <button type="button" aria-label="Setting" onClick={handleClickSetting}>
