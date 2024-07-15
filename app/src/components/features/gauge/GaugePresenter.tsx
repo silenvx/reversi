@@ -25,5 +25,5 @@ type GaugePresenterProps = {
 export function GaugePresenter({ value }: GaugePresenterProps) {
   // 縦のバーを表示する
   // tailwindの計算が動的にはうまく動かないのでstyleを直接指定
-  return <div className="h-96 w-6 rounded-full" style={gaugeStyle(value)} />;
+  return <div className="h-full w-6 rounded-full" style={gaugeStyle(value)} />;
 }

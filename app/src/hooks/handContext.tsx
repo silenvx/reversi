@@ -16,6 +16,7 @@ export interface HandContextType {
   drawCardForPlayer: (player: DiscType, score: number) => void;
   discardCard: (player: DiscType, cardId: string) => void;
   addCard: (player: DiscType, card: SkillCard) => void;
+  resetCard: () => void;
 }
 
 const HandContext = createContext<HandContextType | undefined>(undefined);

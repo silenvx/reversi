@@ -15,7 +15,7 @@ export function PlayerInformationPresenter({
   const rotateClass = player === Disc.black ? "rotate-180" : "";
 
   return (
-    <div className={`flex flex-row gap-10 ${rotateClass}`}>
+    <div className={`flex h-full flex-row gap-10 ${rotateClass}`}>
       <ScoreContainer reversiGame={reversiGame} player={player} />
       <HandContainer reversiGame={reversiGame} player={player} />
     </div>

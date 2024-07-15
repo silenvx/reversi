@@ -13,20 +13,18 @@ export function BoardPresenter({
   handleClick,
 }: BoardPresenterProps) {
   return (
-    <div>
-      <div className="grid w-96 grid-cols-8 grid-rows-8">
-        {reversiGame.board.map((row, i) =>
-          row.map((_, j) => (
-            <CellPresenter
-              key={String(`board-${i}-${j}`)}
-              disc={reversiGame.board[i][j]}
-              isMakeable={reversiGame.checkMakeable(i, j)}
-              isHighlight={reversiGame.checkMakeable(i, j) && isHighlightActive}
-              onClick={() => handleClick(i, j)}
-            />
-          )),
-        )}
-      </div>
+    <div className="grid h-full grid-cols-8 grid-rows-8">
+      {reversiGame.board.map((row, i) =>
+        row.map((_, j) => (
+          <CellPresenter
+            key={String(`board-${i}-${j}`)}
+            disc={reversiGame.board[i][j]}
+            isMakeable={reversiGame.checkMakeable(i, j)}
+            isHighlight={reversiGame.checkMakeable(i, j) && isHighlightActive}
+            onClick={() => handleClick(i, j)}
+          />
+        )),
+      )}
     </div>
   );
 }
