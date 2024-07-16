@@ -18,6 +18,8 @@ import {
   PlayerBoardEvaluation,
 } from "@/domains/reversi/const";
 import { evaluateBoard, calculateMoveScores } from "@/domains/reversi/evaluate";
+import { useHandContext } from "@/hooks/handContext";
+import { useSkills } from "@/hooks/reversiSkill";
 
 export type ReversiGameType = {
   board: DiscType[][];
@@ -27,6 +29,7 @@ export type ReversiGameType = {
   checkMakeable: (row: number, col: number) => boolean;
   getScore: (disc: DiscType) => number;
   reset: () => void;
+  hardReset: () => void;
   hint: () => void;
   isVisible: boolean;
   revertMove: (count?: number) => boolean;
@@ -63,6 +66,9 @@ export const useReversiGame = (): ReversiGameType => {
       black: 0,
       white: 0,
     });
+
+  const { resetCard } = useHandContext();
+  const { resetSkills } = useSkills();
 
   /**
    * 石を置く
@@ -113,6 +119,12 @@ export const useReversiGame = (): ReversiGameType => {
     setCurrentPlayer(Disc.black);
     setWinner(undefined);
     setPassCount(0);
+  };
+
+  const hardReset = () => {
+    reset();
+    resetCard();
+    resetSkills();
   };
 
   // boardが変化したときの処理
@@ -195,6 +207,7 @@ export const useReversiGame = (): ReversiGameType => {
     checkMakeable: checkMakeableWrapper,
     getScore,
     reset,
+    hardReset,
     hint,
     isVisible,
     revertMove,

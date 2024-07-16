@@ -66,6 +66,12 @@ export const discCount = (board: DiscType[][]): [number, number] => {
  */
 export const checkWinner = (board: DiscType[][]): WinnerType => {
   const [blackCount, whiteCount] = discCount(board);
+  if (blackCount === 0) {
+    return Winner.white;
+  }
+  if (whiteCount === 0) {
+    return Winner.black;
+  }
   if (blackCount + whiteCount !== configReversi.boardX * configReversi.boardY) {
     return undefined;
   }

@@ -12,11 +12,11 @@ export function GameContainer() {
     switch (reversiGame.winner) {
       case Winner.black:
         // eslint-disable-next-line no-alert
-        alert("黒の勝ちです");
+        alert("赤の勝ちです");
         break;
       case Winner.white:
         // eslint-disable-next-line no-alert
-        alert("白の勝ちです");
+        alert("青の勝ちです");
         break;
       case Winner.draw:
         // eslint-disable-next-line no-alert
@@ -25,7 +25,7 @@ export function GameContainer() {
       default:
         break;
     }
-    reversiGame.reset();
+    reversiGame.hardReset();
   }, [reversiGame.winner]);
 
   return <GamePresenter reversiGame={reversiGame} />;

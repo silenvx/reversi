@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { MenuPresenter } from "@/components/features/menu/MenuPresenter";
-import { useHandContext } from "@/hooks/handContext";
 import { ReversiGameType } from "@/hooks/reversiGame";
 
 type MenuContainerProps = {
@@ -9,8 +8,6 @@ type MenuContainerProps = {
 };
 
 export function MenuContainer({ reversiGame }: MenuContainerProps) {
-  const { resetCard } = useHandContext();
-
   const [modalOpenSetting, setModalOpenSetting] = useState(false);
   const [modalOpenHint, setModalOpenHint] = useState(false);
   const [modalOpenReset, setModalOpenReset] = useState(false);
@@ -32,8 +29,7 @@ export function MenuContainer({ reversiGame }: MenuContainerProps) {
   };
 
   const handleClickReset = () => {
-    reversiGame.reset();
-    resetCard();
+    reversiGame.hardReset();
     setModalOpenReset(false);
   };
   const handleClickOpenReset = () => {
